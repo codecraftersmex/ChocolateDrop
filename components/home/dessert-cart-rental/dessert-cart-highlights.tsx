@@ -18,7 +18,7 @@ const cartFeatures = [
 const barFeatures = [
   {
     id: "bar-spacious",
-    text: "Barra amplia y elegante ideal para eventos grandes",
+    text: "Mesa amplia y elegante ideal para eventos grandes",
   },
   {
     id: "bar-decoration",
@@ -82,7 +82,7 @@ export function DessertCartHighlights() {
         </div>
       </div>
 
-      {/* Barra de Postres */}
+      {/* Mesa de Postres */}
       <div
         className={`
           space-y-2
@@ -95,7 +95,7 @@ export function DessertCartHighlights() {
             sm:text-xl
           `}
         >
-          Barra de Postres
+          Mesa de Postres
         </h3>
         <div
           className={`

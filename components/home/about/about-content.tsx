@@ -4,30 +4,33 @@ export function AboutContent() {
       <div className="space-y-4">
         <h2
           className={`
-            font-display text-2xl font-bold tracking-tight
-            md:text-4xl
+            font-display text-center text-3xl font-extrabold tracking-tight
+            md:text-left md:text-5xl
           `}
         >
           Acerca de Nosotros
         </h2>
-        <p className="text-lg text-muted-foreground">
-          Una fusión única de tradición brasileña y sabores mexicanos
+
+        <p
+          className={`
+            mx-auto max-w-2xl leading-relaxed text-muted-foreground
+            md:mx-0 md:text-lg
+          `}
+        >
+          <span className="mb-2 block font-semibold text-primary">
+            Chocolate Drop nace de la pasión por el detalle.
+          </span>
+          Cada pieza es un tributo al arte del{" "}
+          <span className="italic">chocolate artesanal</span>, creado a mano,
+          con ingredientes premium y alma brasileña.
         </p>
       </div>
 
       <div className="space-y-4 text-muted-foreground">
         <p>
-          Nuestros chocolates son <strong>100% artesanales</strong>, creados con
-          recetas originales que hemos desarrollado a lo largo de nuestra
-          trayectoria. Nos especializamos en{" "}
-          <strong>brigadeiros gourmet</strong>, esos dulces típicos de Brasil
-          que están presentes en todas las bodas y celebraciones.
-        </p>
-
-        <p>
           Hemos transformado esta tradición brasileña en algo único, adaptándola
           a nuestros conocimientos y al gusto mexicano. Cada creación utiliza
-          exclusivamente <strong>chocolate belga</strong> y{" "}
+          exclusivamente <strong>chocolate belga</strong> e{" "}
           <strong>ingredientes orgánicos</strong>, garantizando la más alta
           calidad en cada bocado.
         </p>

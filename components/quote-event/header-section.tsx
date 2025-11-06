@@ -16,7 +16,7 @@ export function HeaderSection() {
             md:text-4xl
           `}
         >
-          Carrito / Barra de Postres para Eventos
+          Mesa de Postres para Eventos
         </CardTitle>
 
         <CardDescription

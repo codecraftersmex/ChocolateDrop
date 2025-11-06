@@ -20,14 +20,14 @@ export function About({ className }: AboutProps) {
       <div className="pointer-events-none absolute inset-0">
         <div
           className={`
-            absolute top-10 right-20 h-28 w-28 rounded-full bg-gradient-to-br from-amber-200/20
-            to-orange-200/20 blur-2xl
+            absolute top-10 right-20 h-28 w-28 rounded-full bg-gradient-to-br
+            from-amber-200/20 to-orange-200/20 blur-2xl
           `}
         />
         <div
           className={`
-            absolute bottom-20 left-16 h-36 w-36 rounded-full bg-gradient-to-br from-orange-200/15
-            to-rose-200/15 blur-2xl
+            absolute bottom-20 left-16 h-36 w-36 rounded-full bg-gradient-to-br
+            from-orange-200/15 to-rose-200/15 blur-2xl
           `}
         />
       </div>

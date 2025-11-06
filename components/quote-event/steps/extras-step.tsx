@@ -135,7 +135,7 @@ export function ExtrasStep({
                   >
                     <FeatureRow text="Carrito elegante y personalizable" />
                     <FeatureRow text="Variedad de brigadeiros y dulces" />
-                    <FeatureRow text="Barra amplia para eventos grandes" />
+                    <FeatureRow text="Mesa amplia para eventos grandes" />
                     <FeatureRow text="Decoración acorde al tema" />
                   </div>
                 </div>
