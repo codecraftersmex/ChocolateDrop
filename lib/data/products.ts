@@ -277,18 +277,19 @@ export const BRIGADEIROS = [
 export const CAKES = [
   {
     description:
-      "Pastelito de Chocolate con Betún de Ganache Belga y un Brigadeiro Gourmet",
+      "Mini pastelito de chocolate cubierto con ganache de chocolate belga cubierto de frutos rojos y Brigadeiro Triple Chocolate",
     id: "cake-chocolate",
-    image: "",
+    image: "/mini-cakes/chocolate.jpeg",
     isActive: true,
     isSeasonal: false,
     name: "Chocolate",
     season: null,
   },
   {
-    description: "Pastelito Red Velvet con Betún de 4 Leches con Frutos Rojos",
+    description:
+      "Mini pastelito red velvet. Con Brigadeiro cremoso  de 4 leches y frutos rojos.",
     id: "cake-velvet",
-    image: "",
+    image: "/mini-cakes/velvet.jpeg",
     isActive: true,
     isSeasonal: false,
     name: "Red Velvet",
@@ -296,32 +297,22 @@ export const CAKES = [
   },
   {
     description:
-      "Pastelito de Chocolate con Betún de Ganache Belga y un Brigadeiro Gourmet",
-    id: "cake-coco",
-    image: "",
+      "Mini pastelito de vainilla con Brigadeiro de 4 leches cremoso cubierto de frutos rojos y Brigadeiro white crispy",
+    id: "cake-vainilla",
+    image: "/mini-cakes/vainilla.jpeg",
     isActive: true,
     isSeasonal: false,
-    name: "Coco",
+    name: "Vainilla con frutos rojos",
     season: null,
   },
   {
     description:
-      "Pastelito de Chocolate con Betún de Ganache Belga, Frutos Rojos de Temprada y un Brigadeiro Gourmet",
-    id: "cake-chocolate-fruits",
-    image: "",
+      "Mini pastelito de vainilla con Brigadeiro de 4 leches cremoso cubierto de frutos rojos y Brigadeiro white crispy",
+    id: "cake-vainilla-maracuya",
+    image: "/mini-cakes/maracuya.jpeg",
     isActive: true,
     isSeasonal: false,
-    name: "Chocolate Frutos rojos",
-    season: null,
-  },
-  {
-    description:
-      "Pastelito de Chocolate Milk Callebaut relleno de Betún 4 leches y frutos Rojos",
-    id: "cake-chocolate-basket",
-    image: "",
-    isActive: true,
-    isSeasonal: false,
-    name: "Canastida de Chocolate",
+    name: "Vainilla con maracuya",
     season: null,
   },
 ];

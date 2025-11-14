@@ -1,17 +1,22 @@
 import type { Event } from "@/lib/types/event";
 
 import { InfoRow } from "@/components/quote-event/info-feature-rows";
+import { ProductCarousel } from "@/components/quote-event/product-carousel";
 import { ProductQtyCard } from "@/components/quote-event/product-qty-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import {
   MIN_BRIGADEIROS,
   MIN_PASTELITOS,
@@ -20,13 +25,6 @@ import {
 } from "@/lib/constants/quote-event-constants";
 import { BRIGADEIROS, CAKES } from "@/lib/data/products";
 import { ChevronDown, ChevronLeft, ChevronRight, Info } from "lucide-react";
-
-// ⬇️ NEW: shadcn collapsible
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 
 interface ProductsStepProps {
   event: Event;
@@ -46,9 +44,17 @@ export function ProductsStep({
   // Active flavors
   const activeBrigadeiros = BRIGADEIROS.filter(
     (b) => b.isActive && !b.isSeasonal,
-  ).map((b) => b.name);
+  );
 
-  const activeCakes = CAKES.filter((c) => c.isActive).map((c) => c.name);
+  const activeCakes = CAKES.filter((c) => c.isActive);
+
+  const carouselImages = [
+    ...activeCakes.map((c) => ({
+      alt: c.name,
+      src: c.image,
+      title: c.name,
+    })),
+  ];
 
   return (
     <Card className="bg-background shadow-xl">
@@ -56,46 +62,52 @@ export function ProductsStep({
         <CardTitle>2) Productos, presentación y sabores</CardTitle>
       </CardHeader>
 
-      <CardContent
-        className={`
-          grid gap-4
-          md:grid-cols-2
-        `}
-      >
-        {/* Cantidades */}
-        <ProductQtyCard
-          imageSrc="/mini-cakes/cake.jpeg"
-          min={MIN_PASTELITOS}
-          setValue={(qty) =>
-            onEventChange({
-              products: { ...event.products, qtyPastelitos: qty },
-            })
-          }
-          subtitle={`$${UNIT_PRICE_PASTELITOS} c/u`}
-          title="Mini pastelitos gourmet"
-          value={event.products.qtyPastelitos}
-        />
-        <ProductQtyCard
-          imageSrc="/hero.jpg"
-          min={MIN_BRIGADEIROS}
-          setValue={(qty) =>
-            onEventChange({
-              products: { ...event.products, qtyBrigadeiros: qty },
-            })
-          }
-          subtitle={`$${UNIT_PRICE_BRIGADEIROS} c/u`}
-          title="Brigadeiros gourmet"
-          value={event.products.qtyBrigadeiros}
-        />
+      <CardContent>
+        {/* Product Quantities */}
+        <div
+          className={`
+            grid gap-4 pb-6
+            md:grid-cols-2
+          `}
+        >
+          <ProductQtyCard
+            imageSrc="/mini-cakes/cake.jpeg"
+            min={MIN_PASTELITOS}
+            setValue={(qty) =>
+              onEventChange({
+                products: { ...event.products, qtyPastelitos: qty },
+              })
+            }
+            subtitle={`$${UNIT_PRICE_PASTELITOS} c/u`}
+            title="Mini pastelitos gourmet"
+            value={event.products.qtyPastelitos}
+          />
+          <ProductQtyCard
+            imageSrc="/hero.jpg"
+            min={MIN_BRIGADEIROS}
+            setValue={(qty) =>
+              onEventChange({
+                products: { ...event.products, qtyBrigadeiros: qty },
+              })
+            }
+            subtitle={`$${UNIT_PRICE_BRIGADEIROS} c/u`}
+            title="Brigadeiros gourmet"
+            value={event.products.qtyBrigadeiros}
+          />
+        </div>
 
-        <div className="md:col-span-2">
+        <div className="flex flex-col gap-4 pb-4">
+          {/* Info Row */}
           <InfoRow>
             <Info className="h-4 w-4" />
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foregroun text-sm">
               Incluye moldecitos decorativos y presentación lista para mesa o
               recuerdo.
             </p>
           </InfoRow>
+          {/* Image Carousel */}
+          Nuestros Mini Pastelitos Gourmet
+          <ProductCarousel images={carouselImages} />
         </div>
 
         {/* Sabores (visual only) — COLLAPSIBLE on mobile, OPEN on desktop */}
@@ -176,8 +188,8 @@ function FlavorList({
   activeBrigadeiros,
   activeCakes,
 }: {
-  activeBrigadeiros: string[];
-  activeCakes: string[];
+  activeBrigadeiros: { description?: string; name: string }[];
+  activeCakes: { description?: string; name: string }[];
 }) {
   return (
     <div
@@ -190,9 +202,9 @@ function FlavorList({
       <div>
         <div className="mb-2 text-sm font-medium">Brigadeiros</div>
         <div className="flex flex-wrap gap-2">
-          {activeBrigadeiros.map((name) => (
-            <Badge key={name} variant="secondary">
-              {name}
+          {activeBrigadeiros.map((item) => (
+            <Badge key={item.name} variant="secondary">
+              {item.name}
             </Badge>
           ))}
         </div>
@@ -202,9 +214,9 @@ function FlavorList({
       <div>
         <div className="mb-2 text-sm font-medium">Mini pastelitos</div>
         <div className="flex flex-wrap gap-2">
-          {activeCakes.map((name) => (
-            <Badge key={name} variant="secondary">
-              {name}
+          {activeCakes.map((item) => (
+            <Badge key={item.name} variant="secondary">
+              {item.name}
             </Badge>
           ))}
         </div>

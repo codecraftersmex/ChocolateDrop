@@ -42,9 +42,9 @@ export function useQuoteWizard() {
   }
 
   return {
-    step,
-    progressRef,
     handleNext,
     handlePrev,
+    progressRef,
+    step,
   };
 }
