@@ -235,43 +235,6 @@ export const BRIGADEIROS = [
     name: "Perlas Crispy",
     season: null,
   },
-
-  {
-    description: "Oreo oscuro con un toque travieso.",
-    id: "murcielago",
-    image: "/brigadeiros/halloween/bat.jpg",
-    isActive: true,
-    isSeasonal: true,
-    name: "Murciélago",
-    season: "halloween",
-  },
-  {
-    description: "Coco gourmet tostado con un encanto otoñal.",
-    id: "calabaza",
-    image: "/brigadeiros/halloween/calabaza.jpg",
-    isActive: true,
-    isSeasonal: true,
-    name: "Calabaza",
-    season: "halloween",
-  },
-  {
-    description: "Chocolate Milk con frosting de cream cheese.",
-    id: "monstruo",
-    image: "/brigadeiros/halloween/mounstro.jpg",
-    isActive: true,
-    isSeasonal: true,
-    name: "Monstruo",
-    season: "halloween",
-  },
-  {
-    description: "Chocolate blanco con corazón de fresa y vendas dulces.",
-    id: "momia",
-    image: "/brigadeiros/halloween/momia.jpg",
-    isActive: true,
-    isSeasonal: true,
-    name: "Momia",
-    season: "halloween",
-  },
 ];
 
 export const CAKES = [

@@ -1,4 +1,3 @@
-import { HalloweenBanner } from "@/components/halloween-banner";
 import {
   About,
   BrigadeirosCarousel,
@@ -49,7 +48,6 @@ export default function Home() {
       </section>
 
       <Footer />
-      {/* <HalloweenBanner /> */}
     </div>
   );
 }

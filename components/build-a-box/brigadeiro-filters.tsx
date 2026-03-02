@@ -1,7 +1,6 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
@@ -9,8 +8,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BRIGADEIROS } from "@/lib/data/products";
-import { Layers3, Nut, Cherry, Cake, Sparkles, Grid3X3 } from "lucide-react";
+import { Cake, Cherry, Grid3X3, Layers3, Nut, Sparkles } from "lucide-react";
 
 interface BrigadeiroTabsProps {
   activeTab: string;
@@ -18,8 +18,8 @@ interface BrigadeiroTabsProps {
 }
 
 interface CategoryFilterProps {
-  selectedCategory: string;
   onCategoryChange: (value: string) => void;
+  selectedCategory: string;
 }
 
 export function BrigadeiroTabs({
@@ -28,27 +28,17 @@ export function BrigadeiroTabs({
 }: BrigadeiroTabsProps) {
   // Count brigadeiros by category
   const regularCount = BRIGADEIROS.filter((b) => !b.isSeasonal).length;
-  const seasonalCount = BRIGADEIROS.filter((b) => b.isSeasonal).length;
 
   return (
-    <Tabs value={activeTab} onValueChange={onTabChange} className="w-full">
-      <TabsList className="grid h-11 w-full max-w-md grid-cols-2">
+    <Tabs className="w-full" onValueChange={onTabChange} value={activeTab}>
+      <TabsList className="grid h-11 w-full max-w-md grid-cols-1">
         <TabsTrigger
-          value="regular"
           className="flex items-center gap-2 text-sm font-medium"
+          value="regular"
         >
           Clásicos
-          <Badge variant="secondary" className="px-2 py-0.5 text-xs">
+          <Badge className="px-2 py-0.5 text-xs" variant="secondary">
             {regularCount}
-          </Badge>
-        </TabsTrigger>
-        <TabsTrigger
-          value="seasonal"
-          className="flex items-center gap-2 text-sm font-medium"
-        >
-          Halloween
-          <Badge variant="secondary" className="px-2 py-0.5 text-xs">
-            {seasonalCount}
           </Badge>
         </TabsTrigger>
       </TabsList>
@@ -57,8 +47,8 @@ export function BrigadeiroTabs({
 }
 
 export function CategoryFilter({
-  selectedCategory,
   onCategoryChange,
+  selectedCategory,
 }: CategoryFilterProps) {
   // Get unique categories from regular brigadeiros
   const categories = Array.from(
@@ -74,11 +64,11 @@ export function CategoryFilter({
     string,
     React.ComponentType<{ className?: string }>
   > = {
+    "Blancos & Suaves": Sparkles,
     "Clásicos de Chocolate": Layers3,
-    "Nueces & Cacahuates": Nut,
     "Frutales & Refrescantes": Cherry,
     "Inspirados en Postres": Cake,
-    "Blancos & Suaves": Sparkles,
+    "Nueces & Cacahuates": Nut,
   };
 
   const getCategoryIcon = (category: string) => {
@@ -88,24 +78,24 @@ export function CategoryFilter({
 
   return (
     <div className="flex flex-col gap-2">
-      <Select value={selectedCategory} onValueChange={onCategoryChange}>
+      <Select onValueChange={onCategoryChange} value={selectedCategory}>
         <SelectTrigger
           className={`
-          h-12 w-full text-base
-          sm:max-w-sm
-        `}
+            h-12 w-full text-base
+            sm:max-w-sm
+          `}
         >
           <SelectValue placeholder="Todas las categorías" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all" className="py-3">
+          <SelectItem className="py-3" value="all">
             <div className="flex items-center gap-3">
               <Grid3X3 className="h-5 w-5" />
               <span className="text-base">Todas las categorías</span>
             </div>
           </SelectItem>
           {categories.map((category) => (
-            <SelectItem key={category} value={category} className="py-3">
+            <SelectItem className="py-3" key={category} value={category}>
               <div className="flex items-center gap-3">
                 {getCategoryIcon(category)}
                 <span className="text-base">{category}</span>
@@ -121,29 +111,29 @@ export function CategoryFilter({
 // Keep the original component for backward compatibility
 interface BrigadeiroFiltersProps {
   activeTab: string;
+  onCategoryChange: (value: string) => void;
   onTabChange: (value: string) => void;
   selectedCategory: string;
-  onCategoryChange: (value: string) => void;
 }
 
 export function BrigadeiroFilters({
   activeTab,
+  onCategoryChange,
   onTabChange,
   selectedCategory,
-  onCategoryChange,
 }: BrigadeiroFiltersProps) {
   return (
     <div
       className={`
-      space-y-4
-      sm:space-y-6
-    `}
+        space-y-4
+        sm:space-y-6
+      `}
     >
       <BrigadeiroTabs activeTab={activeTab} onTabChange={onTabChange} />
       {activeTab === "regular" && (
         <CategoryFilter
-          selectedCategory={selectedCategory}
           onCategoryChange={onCategoryChange}
+          selectedCategory={selectedCategory}
         />
       )}
     </div>
