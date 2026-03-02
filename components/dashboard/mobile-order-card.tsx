@@ -47,7 +47,7 @@ export function MobileOrderCard({
   const hiddenSummaryCount = boxSummary.length - visibleSummary.length;
 
   return (
-    <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
+    <div className="rounded-xl border border-border bg-white p-4 shadow-sm">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-medium text-muted-foreground">Pedido</p>
@@ -68,7 +68,9 @@ export function MobileOrderCard({
 
       <div className="mt-4 rounded-lg bg-muted/30 p-3">
         <div className="space-y-1">
-          <p className="flex items-center gap-2 text-sm font-medium text-foreground">
+          <p className={`
+            flex items-center gap-2 text-sm font-medium text-foreground
+          `}>
             <User className="h-4 w-4 text-muted-foreground" />
             {order.customer.name}
           </p>

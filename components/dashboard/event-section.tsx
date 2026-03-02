@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 
 export function EventSection() {
   const isMobile = useIsMobile();
-  const { loading, loadEvents, events, updateStatus, updatingEvent } =
+  const { events, loadEvents, loading, updateStatus, updatingEvent } =
     useEvents();
   const [expandedEventKeys, setExpandedEventKeys] = useState<Set<string>>(
     () => new Set(),
@@ -91,13 +91,29 @@ export function EventSection() {
   return (
     <div
       className={`
-        container mx-auto px-2 pb-4
+        container mx-auto my-auto
         sm:px-4 sm:py-8
       `}
     >
-      <Card>
-        <CardHeader className="px-4 py-4 sm:px-6 sm:py-6">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
+      <Card
+        className={`
+          border-border/80 bg-gradient-to-b from-card via-card to-accent/20
+          shadow-md
+        `}
+      >
+        <CardHeader
+          className={`
+            rounded-t-xl border-b border-border/70 bg-gradient-to-r
+            from-accent/35 to-background/70 px-4 py-4
+            sm:px-6 sm:py-6
+          `}
+        >
+          <div
+            className={`
+              flex flex-col gap-3
+              sm:flex-row sm:items-center sm:justify-between sm:gap-0
+            `}
+          >
             <CardTitle
               className={`
                 text-xl font-bold
@@ -106,16 +122,6 @@ export function EventSection() {
             >
               Gestión de Eventos
             </CardTitle>
-            <Button
-              onClick={loadEvents}
-              size="sm"
-              variant="outline"
-              className="self-start sm:self-auto"
-            >
-              <RefreshCw className="mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Actualizar</span>
-              <span className="sm:hidden">Refresh</span>
-            </Button>
           </div>
         </CardHeader>
         <CardContent
@@ -132,7 +138,12 @@ export function EventSection() {
           />
 
           {isMobile ? (
-            <div className="space-y-3">
+            <div
+              className={`
+                space-y-4 rounded-xl border border-border/70 bg-background/50
+                p-3
+              `}
+            >
               <div className="relative">
                 <Search
                   className={`
@@ -141,7 +152,10 @@ export function EventSection() {
                   `}
                 />
                 <Input
-                  className="h-10 border-input bg-background pl-9"
+                  className={`
+                    h-10 border-border/70 bg-background/85 pl-9
+                    focus-visible:ring-primary/40
+                  `}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Buscar evento..."
                   value={searchTerm}
@@ -160,29 +174,47 @@ export function EventSection() {
                 filteredEvents.map((event) => {
                   const rowKey = getEventKey(event);
                   return (
-                    <MobileEventCard
-                      event={event}
-                      isExpanded={expandedEventKeys.has(rowKey)}
-                      isUpdating={updatingEvent === rowKey}
-                      key={rowKey}
-                      onStatusChange={(status) => updateStatus(rowKey, status)}
-                      onToggleExpanded={() => toggleExpanded(rowKey)}
-                    />
+                    <div className="relative pb-2" key={rowKey}>
+                      <div
+                        className={`
+                          pointer-events-none absolute inset-x-2 top-2 bottom-0
+                          rounded-xl border border-border/50 bg-accent/30
+                        `}
+                      />
+                      <div className="relative">
+                        <MobileEventCard
+                          event={event}
+                          isExpanded={expandedEventKeys.has(rowKey)}
+                          isUpdating={updatingEvent === rowKey}
+                          onStatusChange={(status) =>
+                            updateStatus(rowKey, status)
+                          }
+                          onToggleExpanded={() => toggleExpanded(rowKey)}
+                        />
+                      </div>
+                    </div>
                   );
                 })
               )}
             </div>
           ) : (
-            <DataTable
-              columns={columns}
-              data={filteredEvents}
-              emptyMessage={emptyMessage}
-              getRowKey={getEventKey}
-              onSearchChange={setSearchTerm}
-              searchPlaceholder="Buscar por # de evento o nombre del cliente..."
-              searchTerm={searchTerm}
-              tableClassName="min-w-[940px]"
-            />
+            <div
+              className={`
+                rounded-xl border border-border/70 bg-background/55 p-3
+                shadow-inner
+              `}
+            >
+              <DataTable
+                columns={columns}
+                data={filteredEvents}
+                emptyMessage={emptyMessage}
+                getRowKey={getEventKey}
+                onSearchChange={setSearchTerm}
+                searchPlaceholder="Buscar por # de evento o nombre del cliente..."
+                searchTerm={searchTerm}
+                tableClassName="min-w-[940px]"
+              />
+            </div>
           )}
         </CardContent>
       </Card>

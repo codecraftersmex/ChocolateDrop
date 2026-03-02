@@ -30,8 +30,8 @@ export function FilterTabs({
       <div className="mobile-scroll-smooth w-full overflow-x-auto pb-1">
         <TabsList
           className={`
-            flex h-auto w-max min-w-full gap-1.5 p-1.5
-            sm:gap-2 sm:p-2
+            mt-0 flex h-auto w-max min-w-full gap-1.5 p-3
+            sm:mt-4 sm:gap-2 sm:p-2
             ${isMobile ? "justify-start" : "justify-center"}
           `}
         >

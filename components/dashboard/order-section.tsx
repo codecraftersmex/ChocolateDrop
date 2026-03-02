@@ -2,10 +2,10 @@
 
 import type { Order } from "@/lib/types/order";
 
+import { MobileOrderCard } from "@/components/dashboard/mobile-order-card";
 import { DataTable } from "@/components/shared";
 import { FilterTabs } from "@/components/shared/filter-tabs";
 import { ExpandedProducts } from "@/components/shared/table/cells/expanded-products";
-import { MobileOrderCard } from "@/components/dashboard/mobile-order-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -93,14 +93,19 @@ export function OrderSection() {
   return (
     <div
       className={`
-        container mx-auto px-2 pb-4
+        container mx-auto my-auto
         sm:px-4 sm:py-8
       `}
     >
-      <Card>
+      <Card
+        className={`
+          border-border/80 bg-gradient-to-b from-card via-card to-accent/20
+          shadow-md
+        `}
+      >
         <CardHeader
           className={`
-            px-4 py-4
+            rounded-t-xl border-b border-border/70 bg-gradient-to-r px-4 py-4
             sm:px-6 sm:py-6
           `}
         >
@@ -118,31 +123,11 @@ export function OrderSection() {
             >
               Gestión de Pedidos
             </CardTitle>
-            <Button
-              className={`
-                self-start
-                sm:self-auto
-              `}
-              onClick={loadOrders}
-              size="sm"
-              variant="outline"
-            >
-              <RefreshCw className="mr-2 h-4 w-4" />
-              <span
-                className={`
-                  hidden
-                  sm:inline
-                `}
-              >
-                Actualizar
-              </span>
-              <span className="sm:hidden">Refresh</span>
-            </Button>
           </div>
         </CardHeader>
         <CardContent
           className={`
-            space-y-3 p-4 pt-0
+            space-y-3 p-1 pt-0
             sm:space-y-6 sm:p-6 sm:pt-0
           `}
         >
@@ -154,7 +139,12 @@ export function OrderSection() {
           />
 
           {isMobile ? (
-            <div className="space-y-3">
+            <div
+              className={`
+                space-y-4 rounded-xl border border-border/70 bg-background/50
+                p-3
+              `}
+            >
               <div className="relative">
                 <Search
                   className={`
@@ -163,7 +153,10 @@ export function OrderSection() {
                   `}
                 />
                 <Input
-                  className="h-10 border-input bg-background pl-9"
+                  className={`
+                    h-10 border-border/70 bg-white pl-9
+                    focus-visible:ring-primary/40
+                  `}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Buscar pedido..."
                   value={searchTerm}
@@ -183,34 +176,50 @@ export function OrderSection() {
                   const rowKey = getOrderKey(order);
                   const rowIdentity = order.orderNumber || order.id || "";
                   return (
-                    <MobileOrderCard
-                      isExpanded={expandedOrderKeys.has(rowKey)}
-                      isUpdating={updatingOrder === rowIdentity}
-                      key={rowKey}
-                      onStatusChange={(status) =>
-                        updateStatus(rowIdentity, status)
-                      }
-                      onToggleExpanded={() => toggleExpanded(rowKey)}
-                      order={order}
-                    />
+                    <div className="relative pb-0" key={rowKey}>
+                      <div
+                        className={`
+                          pointer-events-none absolute inset-x-2 top-2 bottom-0
+                          rounded-xl border border-border/50 bg-accent/30
+                        `}
+                      />
+                      <div className="relative">
+                        <MobileOrderCard
+                          isExpanded={expandedOrderKeys.has(rowKey)}
+                          isUpdating={updatingOrder === rowIdentity}
+                          onStatusChange={(status) =>
+                            updateStatus(rowIdentity, status)
+                          }
+                          onToggleExpanded={() => toggleExpanded(rowKey)}
+                          order={order}
+                        />
+                      </div>
+                    </div>
                   );
                 })
               )}
             </div>
           ) : (
-            <DataTable
-              columns={columns}
-              data={filteredOrders}
-              emptyMessage={emptyMessage}
-              expandedContent={(order: Order) => (
-                <ExpandedProducts items={order.items} />
-              )}
-              getRowKey={getOrderKey}
-              onSearchChange={setSearchTerm}
-              searchPlaceholder="Buscar por # de pedido o nombre del cliente..."
-              searchTerm={searchTerm}
-              tableClassName="min-w-[860px]"
-            />
+            <div
+              className={`
+                rounded-xl border border-border/70 bg-background/55 p-3
+                shadow-inner
+              `}
+            >
+              <DataTable
+                columns={columns}
+                data={filteredOrders}
+                emptyMessage={emptyMessage}
+                expandedContent={(order: Order) => (
+                  <ExpandedProducts items={order.items} />
+                )}
+                getRowKey={getOrderKey}
+                onSearchChange={setSearchTerm}
+                searchPlaceholder="Buscar por # de pedido o nombre del cliente..."
+                searchTerm={searchTerm}
+                tableClassName="min-w-[860px]"
+              />
+            </div>
           )}
         </CardContent>
       </Card>
