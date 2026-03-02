@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Sidebar,
@@ -9,13 +11,14 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/lib/contexts/auth-context";
 import { Calendar, LayoutDashboard, LogOut, Package } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-// Menu items.
 const items = [
   {
     icon: LayoutDashboard,
@@ -35,7 +38,23 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const pathname = usePathname();
+  const { isMobile, setOpenMobile } = useSidebar();
   const { logout } = useAuth();
+
+  const handleNavClick = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  };
+
+  const isItemActive = (url: string) => {
+    if (url === "/dashboard") {
+      return pathname === url;
+    }
+
+    return pathname === url || pathname.startsWith(`${url}/`);
+  };
 
   return (
     <Sidebar>
@@ -46,6 +65,7 @@ export function AppSidebar() {
             sm:pr-2
           `}
           href="/dashboard"
+          onClick={handleNavClick}
         >
           <div
             className={`
@@ -92,8 +112,9 @@ export function AppSidebar() {
                       text-base font-medium transition-colors
                       hover:bg-accent hover:text-accent-foreground
                     `}
+                    isActive={isItemActive(item.url)}
                   >
-                    <Link href={item.url}>
+                    <Link href={item.url} onClick={handleNavClick}>
                       <item.icon className="!size-5" />
                       <span>{item.title}</span>
                     </Link>
@@ -104,7 +125,6 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Mobile-only logout button */}
         <SidebarGroup
           className={`
             mt-auto

@@ -1,6 +1,7 @@
 import {
   About,
   BrigadeirosCarousel,
+  DashboardHoldGesture,
   DessertCartRental,
   Footer,
   Hero,
@@ -11,6 +12,7 @@ export default function Home() {
     <div className={`
       min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50
     `}>
+      <DashboardHoldGesture />
       <Hero />
 
       {/* Products */}

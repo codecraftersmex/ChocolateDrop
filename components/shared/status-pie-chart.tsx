@@ -46,22 +46,22 @@ export function StatusPieChart({
   // Size configurations
   const sizeConfig = {
     lg: {
-      containerHeight: "h-[250px]",
-      height: "h-[250px]",
-      innerRadius: 50,
-      outerRadius: 100,
+      containerHeight: "h-[240px] sm:h-[250px]",
+      height: "h-[240px] sm:h-[250px]",
+      innerRadius: 48,
+      outerRadius: 94,
     },
     md: {
-      containerHeight: "h-[200px]",
-      height: "h-[200px]",
-      innerRadius: 40,
-      outerRadius: 80,
+      containerHeight: "h-[210px] sm:h-[220px]",
+      height: "h-[210px] sm:h-[220px]",
+      innerRadius: 42,
+      outerRadius: 82,
     },
     sm: {
-      containerHeight: "h-[150px]",
-      height: "h-[150px]",
-      innerRadius: 30,
-      outerRadius: 60,
+      containerHeight: "h-[180px]",
+      height: "h-[180px]",
+      innerRadius: 36,
+      outerRadius: 68,
     },
   };
 
@@ -69,11 +69,12 @@ export function StatusPieChart({
 
   if (total === 0) {
     return (
-      <div className={cn("rounded-lg bg-card p-6", className)}>
+      <div className={cn("rounded-lg bg-card p-4 sm:p-6", className)}>
         {title && (
           <h3
             className={`
-              mb-4 text-center text-lg font-semibold text-card-foreground
+              mb-3 text-center text-base font-semibold text-card-foreground
+              sm:mb-4 sm:text-lg
             `}
           >
             {title}
@@ -97,13 +98,13 @@ export function StatusPieChart({
   const isBottomLegend = legendPosition === "bottom";
 
   return (
-    <div className={cn("rounded-lg bg-card p-6", className)}>
+    <div className={cn("rounded-lg bg-card p-4 sm:p-6", className)}>
       {title && (
-        <div className="mb-6 text-center">
-          <h3 className="text-lg font-semibold text-card-foreground">
+        <div className="mb-4 text-center sm:mb-6">
+          <h3 className="text-base font-semibold text-card-foreground sm:text-lg">
             {title}
           </h3>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
             Total: {total.toLocaleString()} elementos
           </p>
         </div>
@@ -175,9 +176,9 @@ export function StatusPieChart({
             className={cn(
               "flex gap-3",
               isBottomLegend
-                ? "flex-wrap justify-center"
+                ? "w-full flex-wrap justify-center"
                 : `
-                  flex-col
+                  flex-col sm:flex-row sm:flex-wrap
                   lg:min-w-[240px]
                 `,
             )}
@@ -204,10 +205,10 @@ export function StatusPieChart({
                 <div
                   className={cn("flex-1", isBottomLegend ? "text-center" : "")}
                 >
-                  <div className="text-sm font-medium text-card-foreground">
+                  <div className="text-xs font-medium text-card-foreground sm:text-sm">
                     {item.name}
                   </div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-[11px] text-muted-foreground sm:text-xs">
                     {item.value.toLocaleString()} (
                     {((item.value / total) * 100).toFixed(1)}%)
                   </div>

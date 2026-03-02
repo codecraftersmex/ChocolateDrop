@@ -25,17 +25,23 @@ export function DashboardHeader() {
   return (
     <header
       className={`
-        sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur
+        sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur
         supports-[backdrop-filter]:bg-white/60
       `}
     >
-      <div className="flex h-14 items-center px-4">
-        <SidebarTrigger className="mr-2 " />
+      <div
+        className={`
+          flex min-h-14 items-center gap-1 px-3
+          pt-[env(safe-area-inset-top)]
+          sm:px-4
+        `}
+      >
+        <SidebarTrigger className="h-9 w-9 shrink-0" />
         <div className="flex flex-1 items-center justify-between">
           <h1 className="text-lg font-semibold text-gray-900">
             {getPageTitle()}
           </h1>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <Button
               className={`
                 hidden text-gray-600

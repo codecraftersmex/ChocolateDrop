@@ -5,13 +5,15 @@ import type { Order } from "@/lib/types/order";
 import { DataTable } from "@/components/shared";
 import { FilterTabs } from "@/components/shared/filter-tabs";
 import { ExpandedProducts } from "@/components/shared/table/cells/expanded-products";
+import { MobileOrderCard } from "@/components/dashboard/mobile-order-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { useOrderColumns } from "@/hooks/order/use-order-columns";
 import { useOrders } from "@/hooks/order/use-orders";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { generateOrderFilterTabs } from "@/lib/constants/order-constants";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function OrderSection() {
@@ -19,8 +21,12 @@ export function OrderSection() {
   const { loading, loadOrders, orders, updateStatus, updatingOrder } =
     useOrders();
   const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
+  const [expandedOrderKeys, setExpandedOrderKeys] = useState<Set<string>>(
+    () => new Set(),
+  );
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const getOrderKey = (order: Order) => order.id || order.orderNumber || "";
 
   // Filter orders when search term or status filter changes
   useEffect(() => {
@@ -46,12 +52,28 @@ export function OrderSection() {
   }, [orders, selectedStatus, searchTerm]);
 
   const filterTabs = generateOrderFilterTabs(orders);
+  const hasActiveFilters = searchTerm.trim() || selectedStatus !== "all";
+  const emptyMessage = hasActiveFilters
+    ? "No se encontraron pedidos con los filtros aplicados"
+    : "No hay pedidos disponibles";
 
   // Get reusable table columns
   const columns = useOrderColumns({
     onStatusChange: updateStatus,
     updatingOrder,
   });
+
+  const toggleExpanded = (rowKey: string) => {
+    setExpandedOrderKeys((prev) => {
+      const updated = new Set(prev);
+      if (updated.has(rowKey)) {
+        updated.delete(rowKey);
+      } else {
+        updated.add(rowKey);
+      }
+      return updated;
+    });
+  };
 
   if (loading) {
     return (
@@ -71,7 +93,7 @@ export function OrderSection() {
   return (
     <div
       className={`
-        container mx-auto px-2 py-4
+        container mx-auto px-2 pb-4
         sm:px-4 sm:py-8
       `}
     >
@@ -120,7 +142,7 @@ export function OrderSection() {
         </CardHeader>
         <CardContent
           className={`
-            space-y-2 p-4 pt-0
+            space-y-3 p-4 pt-0
             sm:space-y-6 sm:p-6 sm:pt-0
           `}
         >
@@ -131,27 +153,65 @@ export function OrderSection() {
             value={selectedStatus}
           />
 
-          {/* Orders Table */}
-          <DataTable
-            columns={columns}
-            data={filteredOrders}
-            emptyMessage={
-              searchTerm || selectedStatus !== "all"
-                ? "No se encontraron pedidos con los filtros aplicados"
-                : "No hay pedidos disponibles"
-            }
-            expandedContent={(order: Order) => (
-              <ExpandedProducts items={order.items} />
-            )}
-            getRowKey={(order: Order) => order.id || order.orderNumber || ""}
-            onSearchChange={setSearchTerm}
-            searchPlaceholder={
-              isMobile
-                ? "Buscar pedido..."
-                : " Buscar por # de pedido o nombre del cliente..."
-            }
-            searchTerm={searchTerm}
-          />
+          {isMobile ? (
+            <div className="space-y-3">
+              <div className="relative">
+                <Search
+                  className={`
+                    pointer-events-none absolute top-1/2 left-3 h-4 w-4
+                    -translate-y-1/2 text-muted-foreground
+                  `}
+                />
+                <Input
+                  className="h-10 border-input bg-background pl-9"
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Buscar pedido..."
+                  value={searchTerm}
+                />
+              </div>
+              {filteredOrders.length === 0 ? (
+                <div
+                  className={`
+                    rounded-lg border border-dashed border-border bg-muted/20
+                    px-4 py-8 text-center text-sm text-muted-foreground
+                  `}
+                >
+                  {emptyMessage}
+                </div>
+              ) : (
+                filteredOrders.map((order) => {
+                  const rowKey = getOrderKey(order);
+                  const rowIdentity = order.orderNumber || order.id || "";
+                  return (
+                    <MobileOrderCard
+                      isExpanded={expandedOrderKeys.has(rowKey)}
+                      isUpdating={updatingOrder === rowIdentity}
+                      key={rowKey}
+                      onStatusChange={(status) =>
+                        updateStatus(rowIdentity, status)
+                      }
+                      onToggleExpanded={() => toggleExpanded(rowKey)}
+                      order={order}
+                    />
+                  );
+                })
+              )}
+            </div>
+          ) : (
+            <DataTable
+              columns={columns}
+              data={filteredOrders}
+              emptyMessage={emptyMessage}
+              expandedContent={(order: Order) => (
+                <ExpandedProducts items={order.items} />
+              )}
+              getRowKey={getOrderKey}
+              onSearchChange={setSearchTerm}
+              searchPlaceholder="Buscar por # de pedido o nombre del cliente..."
+              searchTerm={searchTerm}
+              tableClassName="min-w-[860px]"
+            />
+          )}
         </CardContent>
       </Card>
     </div>

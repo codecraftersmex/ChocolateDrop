@@ -13,6 +13,7 @@ import {
   UpcomingEvents,
 } from "@/components/shared";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { eventService } from "@/lib/services/event-service";
 import { orderService } from "@/lib/services/order-service";
 import {
@@ -23,19 +24,12 @@ import {
   getMostRequestedBrigadeiros,
   getOrderStatusData,
 } from "@/lib/utils/dashboard-utils";
-import {
-  Calendar,
-  CheckCircle,
-  DollarSign,
-  Package,
-  TrendingUp,
-  Users,
-} from "lucide-react";
+import { Calendar, DollarSign, Package, TrendingUp, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const formatDateRangeTitle = (filter: DateFilterOption): string => {
   if (filter === "all") {
-    return " Todos los datos";
+    return "Todos los datos";
   }
 
   const { end, start } = getDateRange(filter);
@@ -49,24 +43,25 @@ const formatDateRangeTitle = (filter: DateFilterOption): string => {
 
   switch (filter) {
     case "month":
-      return ` ${start.toLocaleDateString("es-ES", {
+      return start.toLocaleDateString("es-ES", {
         month: "long",
         year: "numeric",
-      })}`;
+      });
     case "quarter":
-      return ` Q${Math.floor(start.getMonth() / 3) + 1} ${start.getFullYear()}`;
+      return `Q${Math.floor(start.getMonth() / 3) + 1} ${start.getFullYear()}`;
     case "today":
-      return ` ${formatDate(start)}`;
+      return formatDate(start);
     case "week":
-      return ` ${formatDate(start)} - ${formatDate(end)}`;
+      return `${formatDate(start)} - ${formatDate(end)}`;
     case "year":
-      return ` ${start.getFullYear()}`;
+      return String(start.getFullYear());
     default:
       return "???";
   }
 };
 
 export default function DashboardHome() {
+  const isMobile = useIsMobile();
   const [allOrders, setAllOrders] = useState<Order[]>([]);
   const [allEvents, setAllEvents] = useState<Event[]>([]);
   const [dateFilter, setDateFilter] = useState<DateFilterOption>("month");
@@ -120,13 +115,14 @@ export default function DashboardHome() {
     return (
       <div
         className={`
-          min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50
-          p-6
+          mobile-vh-fix bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50
+          p-4
+          sm:p-6
         `}
       >
         <div className="mx-auto max-w-7xl">
-          <div className="animate-pulse space-y-6">
-            <div className="h-8 w-48 rounded bg-gray-200" />
+          <div className="animate-pulse space-y-4 sm:space-y-6">
+            <div className="h-7 w-40 rounded bg-gray-200 sm:h-8 sm:w-48" />
             <div
               className={`
                 grid grid-cols-1 gap-4
@@ -146,11 +142,12 @@ export default function DashboardHome() {
   return (
     <div
       className={`
-        min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50
-        p-6
+        mobile-vh-fix bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50
+        p-3
+        sm:p-6
       `}
     >
-      <div className="mx-auto max-w-7xl space-y-8">
+      <div className="mx-auto max-w-7xl space-y-6 sm:space-y-8">
         {/* Header with Date Filter */}
         <div
           className={`
@@ -158,15 +155,19 @@ export default function DashboardHome() {
             sm:flex-row sm:items-center
           `}
         >
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
             {formatDateRangeTitle(dateFilter)}
           </h1>
-          <DateFilter onChange={setDateFilter} value={dateFilter} />
+          <DateFilter
+            className="w-full sm:w-auto"
+            onChange={setDateFilter}
+            value={dateFilter}
+          />
         </div>
 
         {/* General Stats */}
-        <div className="space-y-6">
-          <h2 className="text-2xl font-semibold text-gray-800">
+        <div className="space-y-4 sm:space-y-6">
+          <h2 className="text-xl font-semibold text-gray-800 sm:text-2xl">
             Resumen General
           </h2>
 
@@ -198,9 +199,11 @@ export default function DashboardHome() {
         </div>
 
         {/* Orders Section */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           <div className="flex items-center gap-2">
-            <h2 className="text-2xl font-semibold text-gray-800">Órdenes</h2>
+            <h2 className="text-xl font-semibold text-gray-800 sm:text-2xl">
+              Órdenes
+            </h2>
           </div>
 
           {/* Order Stats Cards */}
@@ -238,15 +241,15 @@ export default function DashboardHome() {
             `}
           >
             <Card>
-              <CardHeader>
+              <CardHeader className="px-4 pt-4 sm:px-6 sm:pt-6">
                 <CardTitle>Estado de Órdenes</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="px-3 pb-4 sm:px-6 sm:pb-6">
                 <StatusPieChart
                   className="w-full"
                   data={orderStatusData}
                   legendPosition="bottom"
-                  size="lg"
+                  size={isMobile ? "sm" : "lg"}
                 />
               </CardContent>
             </Card>
@@ -256,9 +259,11 @@ export default function DashboardHome() {
         </div>
 
         {/* Events Section */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           <div className="flex items-center gap-2">
-            <h2 className="text-2xl font-semibold text-gray-800">Eventos</h2>
+            <h2 className="text-xl font-semibold text-gray-800 sm:text-2xl">
+              Eventos
+            </h2>
           </div>
 
           {/* Event Stats Cards */}
@@ -296,15 +301,15 @@ export default function DashboardHome() {
             `}
           >
             <Card>
-              <CardHeader>
+              <CardHeader className="px-4 pt-4 sm:px-6 sm:pt-6">
                 <CardTitle>Estado de Eventos</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="px-3 pb-4 sm:px-6 sm:pb-6">
                 <StatusPieChart
                   className="w-full"
                   data={eventStatusData}
                   legendPosition="bottom"
-                  size="lg"
+                  size={isMobile ? "sm" : "lg"}
                 />
               </CardContent>
             </Card>

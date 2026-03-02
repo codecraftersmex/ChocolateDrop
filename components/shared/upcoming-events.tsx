@@ -100,12 +100,17 @@ export function UpcomingEvents({
 
                   {/* Event details */}
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-baseline justify-between gap-3">
+                    <div
+                      className={`
+                        flex flex-col items-start gap-1
+                        sm:flex-row sm:items-baseline sm:justify-between
+                      `}
+                    >
                       <h3 className="truncate font-medium text-foreground">
                         {event.customer.name}
                       </h3>
                       {/* Total */}
-                      <div className="text-right">
+                      <div className="text-left sm:text-right">
                         <div
                           className={`
                             text-sm font-semibold text-foreground tabular-nums
@@ -118,7 +123,7 @@ export function UpcomingEvents({
 
                     <div
                       className={`
-                        mt-0.5 flex items-center gap-3 text-xs
+                        mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs
                         text-muted-foreground
                       `}
                     >
@@ -126,9 +131,9 @@ export function UpcomingEvents({
                         <Calendar className="h-3 w-3" />
                         {formatDateOnly(event.details.date!)}
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex max-w-[130px] items-center gap-1">
                         <MapPin className="h-3 w-3" />
-                        {event.details.city}
+                        <span className="truncate">{event.details.city}</span>
                       </div>
                       <div className="flex items-center gap-1">
                         <Users className="h-3 w-3" />

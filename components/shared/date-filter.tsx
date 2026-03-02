@@ -27,18 +27,25 @@ const filterOptions = [
 
 export function DateFilter({ className, onChange, value }: DateFilterProps) {
   return (
-    <div className={cn("flex flex-wrap gap-2", className)}>
-      {filterOptions.map((option) => (
-        <Button
-          className="text-xs"
-          key={option.value}
-          onClick={() => onChange(option.value)}
-          size="sm"
-          variant={value === option.value ? "default" : "outline"}
-        >
-          {option.label}
-        </Button>
-      ))}
+    <div
+      className={cn(
+        "mobile-scroll-smooth w-full overflow-x-auto pb-1 sm:w-auto",
+        className,
+      )}
+    >
+      <div className="flex w-max min-w-full gap-2 sm:min-w-0">
+        {filterOptions.map((option) => (
+          <Button
+            className="h-9 rounded-full px-3 text-xs sm:h-8 sm:px-3"
+            key={option.value}
+            onClick={() => onChange(option.value)}
+            size="sm"
+            variant={value === option.value ? "default" : "outline"}
+          >
+            {option.label}
+          </Button>
+        ))}
+      </div>
     </div>
   );
 }

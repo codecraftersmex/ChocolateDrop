@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import { Search } from "lucide-react";
 import React, { useState } from "react";
 
@@ -32,6 +33,7 @@ interface DataTableProps<T> {
   onSearchChange?: (value: string) => void;
   searchPlaceholder?: string;
   searchTerm?: string;
+  tableClassName?: string;
 }
 
 export function DataTable<T>({
@@ -43,6 +45,7 @@ export function DataTable<T>({
   onSearchChange,
   searchPlaceholder = "Buscar...",
   searchTerm = "",
+  tableClassName,
 }: DataTableProps<T>) {
   const [expandedRows, setExpandedRows] = useState<Set<string>>(
     () => new Set(),
@@ -52,7 +55,7 @@ export function DataTable<T>({
       {/* Search and Actions Bar */}
       <div className="flex items-center justify-between gap-4">
         {onSearchChange && (
-          <div className="relative max-w-md flex-1">
+          <div className="relative w-full max-w-md flex-1">
             <Search
               className={`
                 absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform
@@ -72,11 +75,10 @@ export function DataTable<T>({
       {/* Table */}
       <div
         className={`
-          overflow-hidden rounded-lg border border-border bg-background
-          shadow-sm
+          overflow-hidden rounded-lg border border-border bg-background shadow-sm
         `}
       >
-        <Table>
+        <Table className={cn("min-w-[720px]", tableClassName)}>
           <TableHeader>
             <TableRow
               className={`

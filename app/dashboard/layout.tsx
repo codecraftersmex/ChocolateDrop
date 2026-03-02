@@ -2,23 +2,28 @@
 
 import { AppSidebar } from "@/components/dashboard/app-sidebar"
 import { DashboardHeader } from "@/components/dashboard/dashboard-header"
+import { PasswordDialog } from "@/components/dashboard/password-dialog"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AuthProvider, useAuth } from "@/lib/contexts/auth-context"
-import { PasswordDialog } from "@/components/dashboard/password-dialog"
 
 function DashboardContent({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, login } = useAuth()
 
   if (!isAuthenticated) {
-    return <PasswordDialog open={true} onAuthenticated={login} />
+    return <PasswordDialog onAuthenticated={login} open={true} />
   }
 
   return (
-    <SidebarProvider>
+    <SidebarProvider className="overflow-x-clip">
       <AppSidebar />
-      <main className="flex-1">
+      <main
+        className={`
+          mobile-vh-fix flex min-w-0 flex-1 flex-col overflow-x-clip
+          bg-background
+        `}
+      >
         <DashboardHeader />
-        <div className="flex-1">
+        <div className="min-w-0 flex-1 overflow-x-clip">
           {children}
         </div>
       </main>

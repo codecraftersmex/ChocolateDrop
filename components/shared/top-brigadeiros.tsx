@@ -81,12 +81,17 @@ export function TopBrigadeiros({
 
                   {/* Name + orders */}
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-baseline justify-between gap-3">
+                    <div
+                      className={`
+                        flex flex-col items-start gap-1
+                        sm:flex-row sm:items-baseline sm:justify-between
+                      `}
+                    >
                       <h3 className="truncate font-medium text-foreground">
                         {brigadeiro.name}
                       </h3>
                       {/* Units */}
-                      <div className="text-right">
+                      <div className="text-left sm:text-right">
                         <div
                           className={`
                             text-sm font-semibold text-foreground tabular-nums

@@ -2,24 +2,30 @@
 
 import type { Event } from "@/lib/types/event";
 
+import { MobileEventCard } from "@/components/dashboard/mobile-event-card";
 import { DataTable } from "@/components/shared";
 import { FilterTabs } from "@/components/shared/filter-tabs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { useEventColumns } from "@/hooks/event/use-event-columns";
 import { useEvents } from "@/hooks/event/use-events";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { generateEventFilterTabs } from "@/lib/constants/event-constants";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function EventSection() {
   const isMobile = useIsMobile();
   const { loading, loadEvents, events, updateStatus, updatingEvent } =
     useEvents();
+  const [expandedEventKeys, setExpandedEventKeys] = useState<Set<string>>(
+    () => new Set(),
+  );
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const getEventKey = (event: Event) => event.id || "";
 
   // Filter events when search term or status filter changes
   useEffect(() => {
@@ -44,12 +50,28 @@ export function EventSection() {
   }, [events, selectedStatus, searchTerm]);
 
   const filterTabs = generateEventFilterTabs(events);
+  const hasActiveFilters = searchTerm.trim() || selectedStatus !== "all";
+  const emptyMessage = hasActiveFilters
+    ? "No se encontraron eventos con los filtros aplicados"
+    : "No hay eventos disponibles";
 
   // Get reusable table columns
   const columns = useEventColumns({
     onStatusChange: updateStatus,
     updatingEvent,
   });
+
+  const toggleExpanded = (rowKey: string) => {
+    setExpandedEventKeys((prev) => {
+      const updated = new Set(prev);
+      if (updated.has(rowKey)) {
+        updated.delete(rowKey);
+      } else {
+        updated.add(rowKey);
+      }
+      return updated;
+    });
+  };
 
   if (loading) {
     return (
@@ -69,7 +91,7 @@ export function EventSection() {
   return (
     <div
       className={`
-        container mx-auto px-2 py-4
+        container mx-auto px-2 pb-4
         sm:px-4 sm:py-8
       `}
     >
@@ -98,7 +120,7 @@ export function EventSection() {
         </CardHeader>
         <CardContent
           className={`
-            space-y-2 p-4 pt-0
+            space-y-3 p-4 pt-0
             sm:space-y-6 sm:p-6 sm:pt-0
           `}
         >
@@ -109,24 +131,59 @@ export function EventSection() {
             value={selectedStatus}
           />
 
-          {/* Events Table */}
-          <DataTable
-            columns={columns}
-            data={filteredEvents}
-            emptyMessage={
-              searchTerm || selectedStatus !== "all"
-                ? "No se encontraron eventos con los filtros aplicados"
-                : "No hay eventos disponibles"
-            }
-            getRowKey={(event: Event) => event.id || ""}
-            onSearchChange={setSearchTerm}
-            searchPlaceholder={
-              isMobile
-                ? "Buscar evento..."
-                : "Buscar por # de evento o nombre del cliente..."
-            }
-            searchTerm={searchTerm}
-          />
+          {isMobile ? (
+            <div className="space-y-3">
+              <div className="relative">
+                <Search
+                  className={`
+                    pointer-events-none absolute top-1/2 left-3 h-4 w-4
+                    -translate-y-1/2 text-muted-foreground
+                  `}
+                />
+                <Input
+                  className="h-10 border-input bg-background pl-9"
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Buscar evento..."
+                  value={searchTerm}
+                />
+              </div>
+              {filteredEvents.length === 0 ? (
+                <div
+                  className={`
+                    rounded-lg border border-dashed border-border bg-muted/20
+                    px-4 py-8 text-center text-sm text-muted-foreground
+                  `}
+                >
+                  {emptyMessage}
+                </div>
+              ) : (
+                filteredEvents.map((event) => {
+                  const rowKey = getEventKey(event);
+                  return (
+                    <MobileEventCard
+                      event={event}
+                      isExpanded={expandedEventKeys.has(rowKey)}
+                      isUpdating={updatingEvent === rowKey}
+                      key={rowKey}
+                      onStatusChange={(status) => updateStatus(rowKey, status)}
+                      onToggleExpanded={() => toggleExpanded(rowKey)}
+                    />
+                  );
+                })
+              )}
+            </div>
+          ) : (
+            <DataTable
+              columns={columns}
+              data={filteredEvents}
+              emptyMessage={emptyMessage}
+              getRowKey={getEventKey}
+              onSearchChange={setSearchTerm}
+              searchPlaceholder="Buscar por # de evento o nombre del cliente..."
+              searchTerm={searchTerm}
+              tableClassName="min-w-[940px]"
+            />
+          )}
         </CardContent>
       </Card>
     </div>

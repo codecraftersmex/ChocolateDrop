@@ -27,37 +27,37 @@ export function FilterTabs({
 
   return (
     <Tabs className={className} onValueChange={onValueChange} value={value}>
-      <div className="w-full overflow-x-auto">
+      <div className="mobile-scroll-smooth w-full overflow-x-auto pb-1">
         <TabsList
           className={`
-            flex h-auto w-full min-w-fit gap-1 p-1.5
-            sm:p-2
+            flex h-auto w-max min-w-full gap-1.5 p-1.5
+            sm:gap-2 sm:p-2
             ${isMobile ? "justify-start" : "justify-center"}
           `}
         >
           {tabs.map((tab) => (
             <TabsTrigger
               className={`
-                flex min-w-fit items-center gap-1.5 px-2.5 py-2 text-xs
-                whitespace-nowrap transition-colors
+                flex min-h-9 min-w-fit items-center gap-1.5 rounded-md px-3 py-2
+                text-xs whitespace-nowrap transition-colors
                 hover:bg-orange-50
                 data-[state=active]:bg-orange-100
                 data-[state=active]:text-orange-800
                 data-[state=inactive]:text-muted-foreground
-                sm:gap-2 sm:px-4 sm:py-2.5 sm:text-sm
+                sm:min-h-10 sm:gap-2 sm:px-4 sm:text-sm
               `}
               key={tab.value}
               value={tab.value}
             >
-              <span className="truncate">{tab.label}</span>
+              <span>{tab.label}</span>
               {tab.count !== undefined && (
                 <Badge
                   className={`
-                    text-xs
+                    text-[11px]
                     ${
                       isMobile
-                        ? "h-5 min-w-[20px] px-1.5 py-0.5"
-                        : `px-2 py-0.5`
+                        ? "h-5 min-w-[22px] px-1.5 py-0"
+                        : "px-2 py-0.5"
                     }
                   `}
                   variant="secondary"
