@@ -57,7 +57,7 @@ export function ProductsStep({
   ];
 
   return (
-    <Card className="bg-background shadow-xl">
+    <Card className="shadow-xl">
       <CardHeader>
         <CardTitle>2) Productos, presentación y sabores</CardTitle>
       </CardHeader>

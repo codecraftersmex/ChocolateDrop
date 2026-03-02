@@ -3,13 +3,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { ImageOff, Trash2 } from "lucide-react";
+import { ImageOff } from "lucide-react";
 import Image from "next/image";
 import * as React from "react";
 
@@ -50,7 +49,7 @@ export function ProductQtyCard({
   return (
     <Card
       className={cn(
-        "relative overflow-hidden bg-background shadow-lg",
+        "relative overflow-hidden shadow-lg",
         !meetsMin &&
           `
             shadow-[0_0_0_2px_theme(colors.destructive/20)]

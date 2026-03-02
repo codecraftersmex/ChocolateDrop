@@ -10,12 +10,7 @@ import { Clock3, ShieldCheck } from "lucide-react";
 
 export function HeaderSection() {
   return (
-    <Card
-      className={`
-        relative overflow-hidden border-[hsl(33_45%_82%)] bg-background/80
-        shadow-sm
-      `}
-    >
+    <Card className="relative overflow-hidden border-border bg-card shadow-sm">
       <div
         aria-hidden="true"
         className={`

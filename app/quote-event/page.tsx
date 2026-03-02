@@ -11,7 +11,6 @@ import {
 import { useQuoteEvent } from "@/hooks/event/use-quote-event";
 import { useQuoteSubmit } from "@/hooks/event/use-quote-submit";
 import { useQuoteWizard } from "@/hooks/event/use-quote-wizard";
-import { useWhatsAppQuote } from "@/hooks/use-whatsapp";
 
 export default function QuoteEventPage() {
   // Custom hooks for separation of concerns
@@ -20,7 +19,6 @@ export default function QuoteEventPage() {
   const { event, handleEventChange, isProductsStepValid, piecesTotal, total } =
     useQuoteEvent();
 
-  const whatsAppMessage = useWhatsAppQuote(event, total);
   const {
     closeConfirmationDialog,
     eventNumber,
@@ -67,7 +65,6 @@ export default function QuoteEventPage() {
           piecesTotal={piecesTotal}
           step={step}
           total={total}
-          whatsAppMessage={whatsAppMessage}
         />
 
         {/* FAQ */}

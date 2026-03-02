@@ -17,7 +17,6 @@ interface SummaryStepProps {
   onPrev: () => void;
   onSubmit: () => void;
   total: number;
-  whatsAppMessage: string;
 }
 
 export function SummaryStep({
@@ -25,10 +24,9 @@ export function SummaryStep({
   onPrev,
   onSubmit,
   total,
-  whatsAppMessage,
 }: SummaryStepProps) {
   return (
-    <Card className="bg-background shadow-xl">
+    <Card className="shadow-xl">
       <CardHeader>
         <CardTitle>Resumen de tu Evento</CardTitle>
         <CardDescription>

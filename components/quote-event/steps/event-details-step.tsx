@@ -101,7 +101,7 @@ export function EventDetailsStep({
   };
 
   return (
-    <Card className="bg-background shadow-lg">
+    <Card className="shadow-lg">
       <CardHeader>
         <CardTitle>1) Datos del evento</CardTitle>
         <CardDescription>Cuéntanos lo esencial para tu evento.</CardDescription>

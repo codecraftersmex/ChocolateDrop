@@ -14,7 +14,7 @@ export function Progress({ step }: ProgressProps) {
       aria-label="Progreso"
       className={cn(
         `
-          rounded-2xl border p-2.5 shadow-sm
+          rounded-2xl border bg-card p-2.5 shadow-sm
           sm:p-4
         `,
       )}

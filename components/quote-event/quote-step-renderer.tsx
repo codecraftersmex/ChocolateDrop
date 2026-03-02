@@ -8,29 +8,27 @@ import {
 } from "@/components/quote-event";
 
 interface QuoteStepRendererProps {
-  step: number;
   event: Event;
   isProductsStepValid: boolean;
-  piecesTotal: number;
-  total: number;
-  whatsAppMessage: string;
   onEventChange: (newEvent: Partial<Event>) => void;
   onNext: () => void;
   onPrev: () => void;
   onSubmit: () => void;
+  piecesTotal: number;
+  step: number;
+  total: number;
 }
 
 export function QuoteStepRenderer({
-  step,
   event,
   isProductsStepValid,
-  piecesTotal,
-  total,
-  whatsAppMessage,
   onEventChange,
   onNext,
   onPrev,
   onSubmit,
+  piecesTotal,
+  step,
+  total,
 }: QuoteStepRendererProps) {
   switch (step) {
     case 0:
@@ -72,7 +70,6 @@ export function QuoteStepRenderer({
           onPrev={onPrev}
           onSubmit={onSubmit}
           total={total}
-          whatsAppMessage={whatsAppMessage}
         />
       );
 

@@ -40,13 +40,6 @@ export function Faq() {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="q2">
-            <AccordionTrigger>¿Qué incluye la presentación?</AccordionTrigger>
-            <AccordionContent>
-              Incluye moldecitos decorativos y presentación lista para mesa de
-              postres o recuerdito individual.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="q3">
             <AccordionTrigger>
               ¿Qué incluye la renta del carrito?
             </AccordionTrigger>
@@ -55,7 +48,7 @@ export function Faq() {
               horas. Costo fijo de {pesos(CART_RENTAL_PRICE)}.
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="q4">
+          <AccordionItem value="q3">
             <AccordionTrigger>¿Cómo reservo mi fecha?</AccordionTrigger>
             <AccordionContent>
               Con un anticipo del 50% del total de tu cotización. El saldo se

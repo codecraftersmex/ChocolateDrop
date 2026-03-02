@@ -35,7 +35,7 @@ export function ExtrasStep({
   onPrev,
 }: ExtrasStepProps) {
   return (
-    <Card className="bg-background shadow-xl">
+    <Card className="shadow-xl">
       <CardHeader>
         <CardTitle>4) Extras</CardTitle>
         <CardDescription>
