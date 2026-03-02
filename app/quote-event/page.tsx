@@ -44,8 +44,16 @@ export default function QuoteEventPage() {
         `}
       >
         <HeaderSection />
-        <div className="scroll-mt-[85px]" ref={progressRef}>
-          <Progress step={step} />
+        <div
+          className={`
+            sticky top-3 z-20 rounded-xl bg-[hsl(20_60%_96%)]/95 backdrop-blur
+            supports-[backdrop-filter]:bg-[hsl(20_60%_96%)]/85
+            md:static md:mx-0 md:bg-transparent md:p-0 md:backdrop-blur-none
+          `}
+        >
+          <div className="scroll-mt-[104px]" ref={progressRef}>
+            <Progress step={step} />
+          </div>
         </div>
 
         {/* Step cards */}

@@ -7,8 +7,8 @@ import {
 } from "lucide-react";
 
 // Pricing constants
-export const UNIT_PRICE_PASTELITOS = 75; // MXN
-export const UNIT_PRICE_BRIGADEIROS = 50; // MXN
+export const UNIT_PRICE_PASTELITOS = 85; // MXN
+export const UNIT_PRICE_BRIGADEIROS = 60; // MXN
 export const MIN_PASTELITOS = 50;
 export const MIN_BRIGADEIROS = 100;
 export const CART_RENTAL_PRICE = 2800; // MXN flat
