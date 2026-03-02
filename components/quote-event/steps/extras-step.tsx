@@ -35,21 +35,36 @@ export function ExtrasStep({
   onPrev,
 }: ExtrasStepProps) {
   return (
-    <Card className="shadow-xl">
-      <CardHeader>
-        <CardTitle>4) Extras</CardTitle>
-        <CardDescription>
-          Potencia tu evento con el elegante carrito de postres y atención por{" "}
-          {SERVICE_HOURS} horas.
+    <Card className="overflow-hidden shadow-xl">
+      <CardHeader
+        className={`
+          space-y-1.5 pb-3
+          sm:pb-6
+        `}
+      >
+        <CardTitle
+          className={`
+            text-lg
+            sm:text-xl
+          `}
+        >
+          3) Agrega extras
+        </CardTitle>
+        <CardDescription className="text-sm">
+          Personaliza con carrito y servicios adicionales por {SERVICE_HOURS}{" "}
+          horas.
         </CardDescription>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className={`
+        p-4 pt-0
+        sm:p-6 sm:pt-0
+      `}>
         <div
           className={cn(
             `
               group w-full cursor-pointer overflow-hidden rounded-xl border
-              text-left transition
+              bg-card/60 text-left transition
               hover:bg-muted/40
             `,
             event.products.withCart &&
@@ -74,8 +89,9 @@ export function ExtrasStep({
             <div className="relative">
               <div
                 className={`
-                  relative aspect-square w-full overflow-hidden rounded-xl
+                  relative aspect-[4/3] w-full overflow-hidden rounded-xl
                   bg-muted
+                  sm:aspect-square
                 `}
               >
                 <Image
@@ -95,11 +111,15 @@ export function ExtrasStep({
             {/* Content */}
             <div
               className={`
-                flex flex-col gap-3 p-4
+                flex flex-col gap-3 p-3
+                sm:p-4
                 md:p-6
               `}
             >
-              <div className="flex items-start gap-3">
+              <div className={`
+                flex items-start gap-2.5
+                sm:gap-3
+              `}>
                 <Checkbox
                   checked={event.products.withCart}
                   className="mt-1 shrink-0"
@@ -112,8 +132,16 @@ export function ExtrasStep({
                   onClick={(e) => e.stopPropagation()}
                 />
                 <div className="flex-1">
-                  <div className="text-base font-medium">Renta de Carrito</div>
-                  <p className="text-sm text-muted-foreground">
+                  <div className={`
+                    text-sm font-medium
+                    sm:text-base
+                  `}>
+                    Renta de Carrito
+                  </div>
+                  <p className={`
+                    text-xs text-muted-foreground
+                    sm:text-sm
+                  `}>
                     Incluye montaje, desmontaje y atención personalizada por{" "}
                     {SERVICE_HOURS} horas.
                   </p>
@@ -130,7 +158,7 @@ export function ExtrasStep({
                   <div
                     className={`
                       mt-4 grid gap-2
-                      md:grid-cols-2
+                      sm:grid-cols-2
                     `}
                   >
                     <FeatureRow text="Carrito elegante y personalizable" />

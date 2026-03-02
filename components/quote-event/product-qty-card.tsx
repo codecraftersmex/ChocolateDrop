@@ -68,17 +68,22 @@ export function ProductQtyCard({
         Mín: {min}
       </Badge>
 
-      <CardHeader className="pb-3">
+      <CardHeader
+        className={`
+          pb-2.5
+          sm:pb-3
+        `}
+      >
         <div
           className={`
-            grid gap-3
-            sm:grid-cols-[112px_1fr] sm:items-center
+            grid gap-2.5
+            sm:grid-cols-[112px_1fr] sm:items-center sm:gap-3
           `}
         >
           {/* Product image (or placeholder) */}
           <div
             className={`
-              relative aspect-[4/3] overflow-hidden rounded-xl bg-muted
+              relative aspect-[16/10] overflow-hidden rounded-xl bg-muted
               sm:aspect-square sm:h-[112px]
             `}
           >
@@ -110,24 +115,31 @@ export function ProductQtyCard({
           <div>
             <CardTitle
               className={`
-                text-base
-                sm:text-lg
+                text-sm
+                sm:text-base
+                md:text-lg
               `}
             >
               {title}
             </CardTitle>
-            <CardDescription className="mt-1 text-base font-medium">
+            <CardDescription className={`
+              mt-1 text-sm font-medium
+              sm:text-base
+            `}>
               {subtitle}
             </CardDescription>
           </div>
         </div>
       </CardHeader>
 
-      <CardContent className="pt-0">
+      <CardContent className={`
+        p-4 pt-0
+        sm:p-6 sm:pt-0
+      `}>
         <div
           className={cn(
             `
-              mt-0 flex w-full items-center justify-center gap-3
+              mt-0 flex w-full items-center justify-center gap-2
               sm:mt-3 sm:gap-4
             `,
           )}
@@ -135,7 +147,10 @@ export function ProductQtyCard({
           {/* -10 */}
           <Button
             aria-label="Restar diez"
-            className="h-11 w-16 rounded-xl text-base font-semibold"
+            className={`
+              h-10 w-14 rounded-xl text-sm font-semibold
+              sm:h-11 sm:w-16 sm:text-base
+            `}
             onClick={() => setValue(Math.max(0, value - 10))}
             type="button"
             variant="outline"
@@ -150,9 +165,10 @@ export function ProductQtyCard({
             aria-label="Cantidad"
             className={cn(
               `
-                h-11 w-28 rounded-xl text-center text-lg font-medium
+                h-10 w-24 rounded-xl text-center text-base font-medium
                 tabular-nums shadow-inner
-                sm:w-32
+                sm:h-11 sm:w-28 sm:text-lg
+                md:w-32
               `,
               !meetsMin &&
                 `
@@ -174,7 +190,10 @@ export function ProductQtyCard({
           {/* +10 */}
           <Button
             aria-label="Sumar diez"
-            className="h-11 w-16 rounded-xl text-base font-semibold"
+            className={`
+              h-10 w-14 rounded-xl text-sm font-semibold
+              sm:h-11 sm:w-16 sm:text-base
+            `}
             onClick={() => setValue(value + 10)}
             type="button"
             variant="outline"
@@ -186,7 +205,10 @@ export function ProductQtyCard({
         {!meetsMin && (
           <p
             aria-live="polite"
-            className="mt-3 text-center text-sm text-destructive"
+            className={`
+              mt-2 text-center text-xs text-destructive
+              sm:mt-3 sm:text-sm
+            `}
             id="qty-error"
             role="alert"
           >

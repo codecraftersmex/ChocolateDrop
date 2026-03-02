@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { useEventDetailsForm } from "@/hooks/event/use-event-details-form";
-import { CITIES, EVENT_TYPES } from "@/lib/constants/quote-event-constants";
+import { EVENT_TYPES } from "@/lib/constants/quote-event-constants";
 import { toLocalISODate } from "@/lib/utils/utils";
 import {
   Calendar,
@@ -40,27 +40,44 @@ export function EventDetailsStep({
   onEventChange,
   onNext,
 }: EventDetailsStepProps) {
+  const formId = "event-details-form";
   const [dateError, setDateError] = useState<string>("");
 
-  const { form, isCityValid, isDateValid, isNameValid, isPhoneValid, isValid } =
-    useEventDetailsForm({
-      defaultValues: {
-        city: event.details.city,
-        date: event.details.date ? toLocalISODate(event.details.date) : "",
-        name: event.customer.name,
-        phone: event.customer.phone,
-        type: event.details.type,
-      },
-      onSubmit: () => {
-        handleNext();
-      },
-    });
+  const {
+    form,
+    handleSubmit,
+    isCityValid,
+    isDateValid,
+    isNameValid,
+    isPhoneValid,
+    isValid,
+  } = useEventDetailsForm({
+    defaultValues: {
+      city: event.details.city,
+      date: event.details.date ? toLocalISODate(event.details.date) : "",
+      name: event.customer.name,
+      phone: event.customer.phone,
+      type: event.details.type,
+    },
+    onSubmit: () => {
+      handleNext();
+    },
+  });
 
   const handleFieldChange = useCallback(
     (field: string, value: null | number | string) => {
       if (field === "date" && typeof value === "string") {
+        if (!value) {
+          onEventChange({
+            details: { ...event.details, date: undefined },
+          });
+          return;
+        }
+
         // Create a local date to avoid timezone issues
         const [year, month, day] = value.split("-").map(Number);
+        if (!year || !month || !day) return;
+
         const localDate = new Date(year, month - 1, day);
 
         onEventChange({
@@ -86,12 +103,11 @@ export function EventDetailsStep({
       const [year, month, day] = currentDate.split("-").map(Number);
       const selectedDate = new Date(year, month - 1, day);
 
-      const yesterday = new Date();
-      yesterday.setHours(0, 0, 0, 0);
-      yesterday.setDate(yesterday.getDate() - 1);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
-      if (selectedDate < yesterday) {
-        setDateError("La fecha del evento no puede ser anterior a ayer");
+      if (selectedDate < today) {
+        setDateError("La fecha del evento no puede ser anterior a hoy");
         return;
       }
     }
@@ -101,20 +117,35 @@ export function EventDetailsStep({
   };
 
   return (
-    <Card className="shadow-lg">
-      <CardHeader>
-        <CardTitle>1) Datos del evento</CardTitle>
-        <CardDescription>Cuéntanos lo esencial para tu evento.</CardDescription>
+    <Card className="overflow-hidden shadow-lg">
+      <CardHeader
+        className={`
+          space-y-1.5 pb-3
+          sm:pb-6
+        `}
+      >
+        <CardTitle
+          className={`
+            text-lg
+            sm:text-xl
+          `}
+        >
+          1) Cuéntanos tu evento
+        </CardTitle>
+        <CardDescription className="text-sm">
+          Fecha, ciudad y datos de contacto.
+        </CardDescription>
       </CardHeader>
       <CardContent
         className={`
-          grid gap-4
-          sm:grid-cols-2
+          grid gap-3 p-4 pt-0
+          sm:grid-cols-2 sm:gap-4 sm:p-6 sm:pt-0
         `}
       >
         <Form {...form}>
-          <form className="contents">
+          <form className="contents" id={formId} onSubmit={handleSubmit}>
             <FormFieldInput
+              autoComplete="name"
               control={form.control}
               icon={User}
               isValid={isNameValid}
@@ -126,6 +157,7 @@ export function EventDetailsStep({
             />
 
             <FormFieldInput
+              autoComplete="tel-national"
               control={form.control}
               icon={Phone}
               inputMode="numeric"
@@ -133,27 +165,33 @@ export function EventDetailsStep({
               label="Teléfono"
               maxLength={10}
               name="phone"
-              onFieldChange={(value) => handleFieldChange("phone", value)}
+              onFieldChange={(value) => {
+                const normalizedPhone = value.replace(/\D/g, "").slice(0, 10);
+                if (normalizedPhone !== value) {
+                  form.setValue("phone", normalizedPhone, {
+                    shouldDirty: true,
+                    shouldValidate: true,
+                  });
+                }
+                handleFieldChange("phone", normalizedPhone);
+              }}
+              pattern="[0-9]*"
               placeholder="Ej: 5512345678"
               required
+              type="tel"
             />
 
             <FormFieldInput
+              autoComplete="address-level2"
               control={form.control}
               icon={MapPin}
               isValid={isCityValid}
               label="Ciudad"
-              list="city-list"
               name="city"
               onFieldChange={(value) => handleFieldChange("city", value)}
-              placeholder="Ej. San Pedro"
+              placeholder="Ej. Monterrey"
               required
             />
-            <datalist id="city-list">
-              {CITIES.map((c) => (
-                <option key={c} value={c} />
-              ))}
-            </datalist>
 
             <div>
               <FormFieldInput

@@ -20,7 +20,7 @@ interface UseEventDetailsFormProps {
 
 export function useEventDetailsForm({
   defaultValues = {
-    city: "Monterrey",
+    city: "",
     date: "",
     name: "",
     phone: "",

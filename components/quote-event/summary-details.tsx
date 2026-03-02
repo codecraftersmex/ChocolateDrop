@@ -1,5 +1,4 @@
 import type { Event } from "@/lib/types/event";
-import { formatDateOnly } from "@/lib/utils/format-utils";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +10,7 @@ import {
   UNIT_PRICE_BRIGADEIROS,
   UNIT_PRICE_PASTELITOS,
 } from "@/lib/constants/quote-event-constants";
+import { formatDateOnly } from "@/lib/utils/format-utils";
 import { pesos } from "@/lib/utils/quote-event-utils";
 import {
   Calendar,
@@ -31,16 +31,28 @@ export function SummaryDetails({ event, total }: SummaryDetailsProps) {
     EVENT_TYPES.find((t) => t.id === event.details.type)?.label ?? "-";
 
   return (
-    <div className="grid gap-3 text-[15px] leading-snug">
+    <div className={`
+      grid gap-2.5 text-sm leading-snug
+      sm:gap-3 sm:text-[15px]
+    `}>
       {/* Detalles del evento */}
-      <Card className="bg-card shadow-md">
-        <CardHeader className="pb-3">
+      <Card className="bg-card shadow-sm">
+        <CardHeader className="pb-2.5">
           <div className="flex items-center gap-2">
-            <PartyPopper className="size-5 text-muted-foreground" />
-            <CardTitle className="text-base">Detalles del evento</CardTitle>
+            <PartyPopper className={`
+              size-4 text-muted-foreground
+              sm:size-5
+            `} />
+            <CardTitle className={`
+              text-sm
+              sm:text-base
+            `}>Detalles del evento</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="grid gap-2 text-muted-foreground">
+        <CardContent className={`
+          grid gap-2 p-4 pt-0 text-muted-foreground
+          sm:p-6 sm:pt-0
+        `}>
           <div className="flex items-center gap-2">
             <Calendar className="h-3.5 w-3.5" />
             <span>Fecha:</span>
@@ -66,19 +78,31 @@ export function SummaryDetails({ event, total }: SummaryDetailsProps) {
       </Card>
 
       {/* Tu seleccion */}
-      <Card className="bg-card shadow-md">
-        <CardHeader className="pb-3">
+      <Card className="bg-card shadow-sm">
+        <CardHeader className="pb-2.5">
           <div className="flex items-center gap-2">
-            <ShoppingBasket className="size-5 text-muted-foreground" />
-            <CardTitle className="text-base">Tu selección</CardTitle>
+            <ShoppingBasket className={`
+              size-4 text-muted-foreground
+              sm:size-5
+            `} />
+            <CardTitle className={`
+              text-sm
+              sm:text-base
+            `}>Tu selección</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="grid gap-2">
+        <CardContent className={`
+          grid gap-2 p-4 pt-0
+          sm:p-6 sm:pt-0
+        `}>
           {event.products.qtyPastelitos > 0 && (
-            <div className="flex items-center justify-between">
+            <div className={`
+              flex flex-col gap-1
+              sm:flex-row sm:items-center sm:justify-between
+            `}>
               <span className="text-muted-foreground">
-                Mini pastelitos gourmet
-                <Badge className="ml-2 px-2" variant={"outline"}>
+                <span>Mini pastelitos gourmet</span>
+                <Badge className="ml-2 px-2" variant="outline">
                   x {event.products.qtyPastelitos}
                 </Badge>
               </span>
@@ -88,10 +112,13 @@ export function SummaryDetails({ event, total }: SummaryDetailsProps) {
             </div>
           )}
           {event.products.qtyBrigadeiros > 0 && (
-            <div className="flex items-center justify-between">
+            <div className={`
+              flex flex-col gap-1
+              sm:flex-row sm:items-center sm:justify-between
+            `}>
               <span className="text-muted-foreground">
-                Brigadeiros gourmet
-                <Badge className="ml-2 px-2" variant={"outline"}>
+                <span>Brigadeiros gourmet</span>
+                <Badge className="ml-2 px-2" variant="outline">
                   x {event.products.qtyBrigadeiros}
                 </Badge>
               </span>
@@ -101,7 +128,10 @@ export function SummaryDetails({ event, total }: SummaryDetailsProps) {
             </div>
           )}
           {event.products.withCart && (
-            <div className="flex items-center justify-between">
+            <div className={`
+              flex flex-col gap-1
+              sm:flex-row sm:items-center sm:justify-between
+            `}>
               <span className="text-muted-foreground">
                 Carrito de postres ({SERVICE_HOURS}h)
               </span>
@@ -120,14 +150,23 @@ export function SummaryDetails({ event, total }: SummaryDetailsProps) {
       </Card>
 
       {/* Totales */}
-      <Card className="bg-card shadow-md">
-        <CardHeader className="pb-3">
+      <Card className="bg-card shadow-sm">
+        <CardHeader className="pb-2.5">
           <div className="flex items-center gap-2">
-            <Wallet className="size-5 text-muted-foreground" />
-            <CardTitle className="text-base">Totales</CardTitle>
+            <Wallet className={`
+              size-4 text-muted-foreground
+              sm:size-5
+            `} />
+            <CardTitle className={`
+              text-sm
+              sm:text-base
+            `}>Totales</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-2">
+        <CardContent className={`
+          space-y-2 p-4 pt-0
+          sm:p-6 sm:pt-0
+        `}>
           <div className="flex items-center justify-between">
             <span className="text-base font-semibold">Total</span>
             <span className="text-base font-semibold text-primary">

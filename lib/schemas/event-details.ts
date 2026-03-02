@@ -75,7 +75,7 @@ export const createDefaultEvent = (): Event => ({
     phone: "",
   },
   details: {
-    city: "Monterrey",
+    city: "",
     date: undefined,
     type: "social",
   },

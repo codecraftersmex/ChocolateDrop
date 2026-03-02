@@ -19,7 +19,10 @@ interface ProductCarouselProps {
 
 export function ProductCarousel({ images }: ProductCarouselProps) {
   return (
-    <div className="w-full px-8">
+    <div className={`
+      w-full px-1
+      sm:px-8
+    `}>
       <Carousel
         className="w-full"
         opts={{
@@ -29,15 +32,16 @@ export function ProductCarousel({ images }: ProductCarouselProps) {
       >
         <CarouselContent
           className={`
-            -ml-2
+            -ml-1
+            sm:-ml-2
             md:-ml-4
           `}
         >
           {images.map((img, index) => (
             <CarouselItem
               className={`
-                basis-full pl-2
-                sm:basis-1/2
+                basis-full pl-1
+                sm:basis-1/2 sm:pl-2
                 md:basis-1/3 md:pl-4
                 lg:basis-1/4
               `}
@@ -62,7 +66,8 @@ export function ProductCarousel({ images }: ProductCarouselProps) {
                 <div
                   className={`
                     absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60
-                    to-transparent p-3
+                    to-transparent p-2
+                    sm:p-3
                   `}
                 >
                   <p className="text-xs font-medium text-white">{img.title}</p>
@@ -73,13 +78,15 @@ export function ProductCarousel({ images }: ProductCarouselProps) {
         </CarouselContent>
         <CarouselPrevious
           className={`
-            left-2
+            hidden
+            sm:left-2 sm:flex
             md:-left-12
           `}
         />
         <CarouselNext
           className={`
-            right-2
+            hidden
+            sm:right-2 sm:flex
             md:-right-12
           `}
         />

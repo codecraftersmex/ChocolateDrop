@@ -26,14 +26,29 @@ export function SummaryStep({
   total,
 }: SummaryStepProps) {
   return (
-    <Card className="shadow-xl">
-      <CardHeader>
-        <CardTitle>Resumen de tu Evento</CardTitle>
-        <CardDescription>
-          Revisa los detalles antes de enviar tu cotización.
+    <Card className="overflow-hidden shadow-xl">
+      <CardHeader
+        className={`
+          space-y-1.5 pb-3
+          sm:pb-6
+        `}
+      >
+        <CardTitle
+          className={`
+            text-lg
+            sm:text-xl
+          `}
+        >
+          4) Revisa y confirma
+        </CardTitle>
+        <CardDescription className="text-sm">
+          Valida todo antes de enviar tu cotización.
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className={`
+        p-4 pt-0
+        sm:p-6 sm:pt-0
+      `}>
         <SummaryDetails event={event} total={total} />
       </CardContent>
       <CardFooter className="flex items-center justify-between">
