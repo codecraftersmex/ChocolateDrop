@@ -11,5 +11,8 @@
     { "rule": "perfectionist/*", "severity": "off" }
   ],
   "typescript.autoClosingTags": false,
-  "biome.requireConfiguration": false
+  "biome.requireConfiguration": false,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

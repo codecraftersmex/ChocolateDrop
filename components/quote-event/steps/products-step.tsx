@@ -1,7 +1,6 @@
 import type { Event } from "@/lib/types/event";
 
-import { InfoRow } from "@/components/quote-event/info-feature-rows";
-import { ProductCarousel } from "@/components/quote-event/product-carousel";
+import { ProductCarouselQtyCard } from "@/components/quote-event/product-carousel-qty-card";
 import { ProductQtyCard } from "@/components/quote-event/product-qty-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,7 +19,7 @@ import {
   UNIT_PRICE_PASTELITOS,
 } from "@/lib/constants/quote-event-constants";
 import { BRIGADEIROS, CAKES } from "@/lib/data/products";
-import { ChevronLeft, ChevronRight, Info } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ProductsStepProps {
   event: Event;
@@ -119,60 +118,38 @@ export function ProductsStep({
           </div>
         </div>
 
-        <div
-          className={`
-            flex flex-col gap-3
-            sm:gap-4
-          `}
-        >
-          {/* Image Carousel */}
-          <p className="text-sm font-medium">Nuestros Mini Pastelitos Gourmet</p>
-          <ProductCarousel images={carouselImages} />
-        </div>
-
         {/* Product Quantities */}
+        <p className="text-sm font-medium">Selecciona cantidades</p>
         <div
           className={`
-            space-y-2 rounded-xl border bg-muted/20 p-3
+            space-y-2
             sm:p-4
           `}
         >
-          <p className="text-sm font-medium">Selecciona cantidades</p>
-          <p className="text-xs text-muted-foreground">
-            Aquí solo defines cuántas piezas deseas de cada producto.
-          </p>
-          <div
-            className={`
-              grid gap-3 pt-1
-              sm:gap-4
-              md:grid-cols-2
-            `}
-          >
-            <ProductQtyCard
-              imageSrc="/mini-cakes/cake.jpeg"
-              min={MIN_PASTELITOS}
-              setValue={(qty) =>
-                onEventChange({
-                  products: { ...event.products, qtyPastelitos: qty },
-                })
-              }
-              subtitle={`$${UNIT_PRICE_PASTELITOS} c/u`}
-              title="Mini pastelitos gourmet"
-              value={event.products.qtyPastelitos}
-            />
-            <ProductQtyCard
-              imageSrc="/hero.jpg"
-              min={MIN_BRIGADEIROS}
-              setValue={(qty) =>
-                onEventChange({
-                  products: { ...event.products, qtyBrigadeiros: qty },
-                })
-              }
-              subtitle={`$${UNIT_PRICE_BRIGADEIROS} c/u`}
-              title="Brigadeiros gourmet"
-              value={event.products.qtyBrigadeiros}
-            />
-          </div>
+          <ProductCarouselQtyCard
+            images={carouselImages}
+            min={MIN_PASTELITOS}
+            setValue={(qty) =>
+              onEventChange({
+                products: { ...event.products, qtyPastelitos: qty },
+              })
+            }
+            subtitle={`$${UNIT_PRICE_PASTELITOS} c/u`}
+            title="Mini pastelitos gourmet"
+            value={event.products.qtyPastelitos}
+          />
+          <ProductQtyCard
+            imageSrc="/hero.jpg"
+            min={MIN_BRIGADEIROS}
+            setValue={(qty) =>
+              onEventChange({
+                products: { ...event.products, qtyBrigadeiros: qty },
+              })
+            }
+            subtitle={`$${UNIT_PRICE_BRIGADEIROS} c/u`}
+            title="Brigadeiros gourmet"
+            value={event.products.qtyBrigadeiros}
+          />
         </div>
       </CardContent>
 

@@ -278,4 +278,15 @@ export const CAKES = [
     name: "Vainilla con maracuya",
     season: null,
   },
+
+  {
+    description:
+      "Mini pastelito de zanahoria con Brigadeiro de chocolate",
+    id: "carrot-chocolate",
+    image: "/mini-cakes/carrot-chocolate.jpeg",
+    isActive: true,
+    isSeasonal: false,
+    name: "Zanahoria con chocolate",
+    season: null,
+  },
 ];

@@ -2,6 +2,7 @@ export { Faq } from "./faq";
 // Main components
 export { HeaderSection } from "./header-section";
 export { FeatureRow, InfoRow } from "./info-feature-rows";
+export { ProductCarouselQtyCard } from "./product-carousel-qty-card";
 export { ProductQtyCard } from "./product-qty-card";
 export { Progress } from "./progress-indicator";
 export { QuoteConfirmationDialog } from "./quote-confirmation-dialog";
