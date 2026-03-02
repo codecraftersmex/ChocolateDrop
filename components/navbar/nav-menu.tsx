@@ -27,7 +27,7 @@ const navItems: {
     label: "Inicio",
   },
   {
-    description: "Arma tu caja ideal",
+    description: "Arma tu empaque ideal",
     href: "/build-a-box",
     icon: Package,
     label: "Empaques",

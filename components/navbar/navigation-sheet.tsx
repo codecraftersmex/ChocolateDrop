@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
@@ -10,11 +9,10 @@ import {
 } from "@/components/ui/sheet";
 import { BUSINESS_WHATSAPP_NUMBER } from "@/lib/constants/contact-constants";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { Menu, MessageCircle } from "lucide-react";
+import { ArrowRight, Menu, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-import { Logo } from "./logo";
 import { NavMenu } from "./nav-menu";
 
 export const NavigationSheet = () => {
@@ -39,17 +37,14 @@ export const NavigationSheet = () => {
       </SheetTrigger>
       <SheetContent
         className={`
-          flex w-64 flex-col border-l border-border/40 bg-background/95
+          flex w-72 flex-col border-l border-border/40 bg-background/95
           backdrop-blur-md
           supports-[backdrop-filter]:bg-background/80
         `}
         side="right"
       >
-        <Logo />
 
-        <Separator className="bg-primary/10" />
-
-        <div className="mt-2 flex-1">
+        <div className="mt-8 flex-1">
           <NavMenu
             onItemClick={() => setIsOpen(false)}
             orientation="vertical"
@@ -58,33 +53,51 @@ export const NavigationSheet = () => {
 
         <div
           className={`
-            mt-auto mb-4 rounded-xl border border-primary/10 bg-primary/5 p-4
+            mt-auto rounded-xl border border-primary/10 bg-primary/5 p-4
             text-center
           `}
         >
-          <p className="text-lg font-bold text-primary">
+          <p className="text-lg font-bold tracking-tight text-primary">
             Haz tu evento inolvidable
           </p>
-          <p className="mt-1 text-sm font-medium text-muted-foreground">
-            Postres personalizados para cualquier ocasion
+          <p
+            className={`
+              mt-1 text-sm leading-snug font-medium text-muted-foreground
+            `}
+          >
+            Mesa de postres a tu medida, cotiza en minutos.
           </p>
-          <Link href="/quote-event" onClick={() => setIsOpen(false)}>
-            <Button className="mt-3 w-full font-bold" size="lg">
-              Cotiza tu Evento!
-            </Button>
-          </Link>
+          <Button
+            asChild
+            className={`
+              group mt-4 h-11 w-full rounded-lg font-semibold shadow-md
+              shadow-primary/20 transition-all
+              hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/30
+            `}
+            size="lg"
+          >
+            <Link href="/quote-event" onClick={() => setIsOpen(false)}>
+              <span>Cotiza tu evento ahora</span>
+              <ArrowRight
+                className={`
+                  h-4 w-4 transition-transform duration-200
+                  group-hover:translate-x-1
+                `}
+              />
+            </Link>
+          </Button>
         </div>
 
         <a
-          href={`https://wa.me/52${BUSINESS_WHATSAPP_NUMBER}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => setIsOpen(false)}
           className={`
-            mb-4 flex items-center justify-center gap-2 rounded-lg py-2 text-sm
+            mb-2 flex items-center justify-center gap-2 rounded-lg py-2 text-sm
             font-medium text-muted-foreground transition-colors
             hover:text-primary
           `}
+          href={`https://wa.me/52${BUSINESS_WHATSAPP_NUMBER}`}
+          onClick={() => setIsOpen(false)}
+          rel="noopener noreferrer"
+          target="_blank"
         >
           <MessageCircle className="h-4 w-4" />
           Escríbenos por WhatsApp
