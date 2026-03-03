@@ -27,6 +27,7 @@ interface ProductCarouselImage {
 
 interface ProductCarouselQtyCardProps {
   className?: string;
+  imageMode?: "contain" | "cover";
   images: ProductCarouselImage[];
   min: number;
   setValue: (n: number) => void;
@@ -37,6 +38,7 @@ interface ProductCarouselQtyCardProps {
 
 export function ProductCarouselQtyCard({
   className,
+  imageMode = "cover",
   images,
   min,
   setValue,
@@ -45,6 +47,7 @@ export function ProductCarouselQtyCard({
   value,
 }: ProductCarouselQtyCardProps) {
   const meetsMin = value === 0 || value >= min;
+  const qtyErrorId = React.useId();
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   return (
@@ -123,7 +126,11 @@ export function ProductCarouselQtyCard({
                   >
                     <Image
                       alt={img.alt}
-                      className="object-cover"
+                      className={cn(
+                        imageMode === "contain"
+                          ? "object-contain p-4"
+                          : "object-cover",
+                      )}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
                       src={img.src}
@@ -167,7 +174,7 @@ export function ProductCarouselQtyCard({
           </Button>
 
           <Input
-            aria-describedby={!meetsMin ? "qty-error-carousel" : undefined}
+            aria-describedby={!meetsMin ? qtyErrorId : undefined}
             aria-invalid={!meetsMin}
             aria-label="Cantidad"
             className={cn(
@@ -215,7 +222,7 @@ export function ProductCarouselQtyCard({
               text-center text-xs text-destructive
               sm:text-sm
             `}
-            id="qty-error-carousel"
+            id={qtyErrorId}
             role="alert"
           >
             Mínimo {min} para continuar.

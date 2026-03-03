@@ -1,43 +1,55 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function useQuoteWizard() {
   const [step, setStep] = useState<number>(0);
   const progressRef = useRef<HTMLDivElement>(null);
+  const shouldScrollOnStepChange = useRef(false);
+  const realignTimeoutRef = useRef<null | number>(null);
 
   // Navigation handlers
   function handleNext() {
     if (step < 3) {
+      shouldScrollOnStepChange.current = true;
       setStep((s) => s + 1);
-      scrollToProgress();
     }
   }
 
   function handlePrev() {
     if (step > 0) {
+      shouldScrollOnStepChange.current = true;
       setStep((s) => s - 1);
-      scrollToProgress();
     }
   }
+
+  useEffect(() => {
+    if (!shouldScrollOnStepChange.current) {
+      return;
+    }
+    shouldScrollOnStepChange.current = false;
+
+    // First alignment right after the new step renders.
+    const rafId = window.requestAnimationFrame(scrollToProgress);
+
+    // Second alignment for mobile keyboard/layout shifts.
+    realignTimeoutRef.current = window.setTimeout(scrollToProgress, 220);
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      if (realignTimeoutRef.current !== null) {
+        window.clearTimeout(realignTimeoutRef.current);
+      }
+    };
+  }, [step]);
 
   // Scroll to progress component
   function scrollToProgress() {
     const el = progressRef.current;
     if (!el) return;
 
-    // Desired top gap (what your scroll-mt was doing)
-    const OFFSET = 85;
-
-    // Get current scroll + element position
-    const rect = el.getBoundingClientRect();
-    const currentY = window.pageYOffset || document.documentElement.scrollTop;
-    const targetY = Math.max(0, currentY + rect.top - OFFSET);
-
-    // Use the root scroller (Safari-safe) and avoid scrollIntoView
-    const scroller = document.scrollingElement || document.documentElement;
-
-    // Smooth, no jank with fixed bars
-    requestAnimationFrame(() => {
-      scroller.scrollTo({ behavior: "smooth", top: targetY });
+    el.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest",
     });
   }
 

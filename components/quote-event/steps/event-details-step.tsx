@@ -130,7 +130,7 @@ export function EventDetailsStep({
             sm:text-xl
           `}
         >
-          1) Cuéntanos tu evento
+          Cuéntanos tu evento
         </CardTitle>
         <CardDescription className="text-sm">
           Fecha, ciudad y datos de contacto.
@@ -226,12 +226,23 @@ export function EventDetailsStep({
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex items-center justify-between">
-        <Button disabled variant="ghost">
-          <ChevronLeft className="mr-2 h-4 w-4" /> Atrás
+      <CardFooter
+        className={`
+          flex items-center justify-between border-t bg-muted/10 px-4 py-3
+          sm:px-6
+        `}
+      >
+        <Button className="w-32 justify-center" disabled variant="secondary">
+          <ChevronLeft className="mr-2 h-4 w-4" />
+          Atrás
         </Button>
-        <Button disabled={!isValid} onClick={handleNext}>
-          Continuar <ChevronRight className="ml-2 h-4 w-4" />
+        <Button
+          className="w-32 justify-center"
+          disabled={!isValid}
+          onClick={handleNext}
+        >
+          Continuar
+          <ChevronRight className="ml-2 h-4 w-4" />
         </Button>
       </CardFooter>
     </Card>

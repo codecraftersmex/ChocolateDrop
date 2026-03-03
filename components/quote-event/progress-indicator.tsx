@@ -5,7 +5,7 @@ interface ProgressProps {
 }
 
 export function Progress({ step }: ProgressProps) {
-  const steps = ["Evento", "Productos", "Extras", "Resumen"];
+  const steps = ["Evento", "Elige", "Extras", "Resumen"];
   const total = steps.length;
   const currentStep = Math.min(total - 1, Math.max(0, step));
 

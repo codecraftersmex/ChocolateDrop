@@ -48,18 +48,19 @@ export function ExtrasStep({
             sm:text-xl
           `}
         >
-          3) Agrega extras
+          Renta de carrito para tu evento
         </CardTitle>
         <CardDescription className="text-sm">
-          Personaliza con carrito y servicios adicionales por {SERVICE_HOURS}{" "}
-          horas.
+          Personaliza con carrito y servicios adicionales.
         </CardDescription>
       </CardHeader>
 
-      <CardContent className={`
-        p-4 pt-0
-        sm:p-6 sm:pt-0
-      `}>
+      <CardContent
+        className={`
+          p-4 pt-0
+          sm:p-6 sm:pt-0
+        `}
+      >
         <div
           className={cn(
             `
@@ -116,10 +117,12 @@ export function ExtrasStep({
                 md:p-6
               `}
             >
-              <div className={`
-                flex items-start gap-2.5
-                sm:gap-3
-              `}>
+              <div
+                className={`
+                  flex items-start gap-2.5
+                  sm:gap-3
+                `}
+              >
                 <Checkbox
                   checked={event.products.withCart}
                   className="mt-1 shrink-0"
@@ -132,16 +135,20 @@ export function ExtrasStep({
                   onClick={(e) => e.stopPropagation()}
                 />
                 <div className="flex-1">
-                  <div className={`
-                    text-sm font-medium
-                    sm:text-base
-                  `}>
+                  <div
+                    className={`
+                      text-sm font-medium
+                      sm:text-base
+                    `}
+                  >
                     Renta de Carrito
                   </div>
-                  <p className={`
-                    text-xs text-muted-foreground
-                    sm:text-sm
-                  `}>
+                  <p
+                    className={`
+                      text-xs text-muted-foreground
+                      sm:text-sm
+                    `}
+                  >
                     Incluye montaje, desmontaje y atención personalizada por{" "}
                     {SERVICE_HOURS} horas.
                   </p>
@@ -172,13 +179,19 @@ export function ExtrasStep({
           </div>
         </div>
       </CardContent>
-
-      <CardFooter className="flex items-center justify-between">
-        <Button onClick={onPrev} variant="ghost">
-          <ChevronLeft className="mr-2 h-4 w-4" /> Atrás
+      <CardFooter
+        className={`
+          flex items-center justify-between border-t bg-muted/10 px-4 py-3
+          sm:px-6
+        `}
+      >
+        <Button className="w-32 justify-center" onClick={onPrev} variant="secondary">
+          <ChevronLeft className="mr-2 h-4 w-4" />
+          Atrás
         </Button>
-        <Button onClick={onNext}>
-          Continuar <ChevronRight className="ml-2 h-4 w-4" />
+        <Button className="w-32 justify-center" onClick={onNext}>
+          Continuar
+          <ChevronRight className="ml-2 h-4 w-4" />
         </Button>
       </CardFooter>
     </Card>

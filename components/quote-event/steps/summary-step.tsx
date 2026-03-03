@@ -39,25 +39,33 @@ export function SummaryStep({
             sm:text-xl
           `}
         >
-          4) Revisa y confirma
+          Revisa y confirma
         </CardTitle>
         <CardDescription className="text-sm">
           Valida todo antes de enviar tu cotización.
         </CardDescription>
       </CardHeader>
-      <CardContent className={`
-        p-4 pt-0
-        sm:p-6 sm:pt-0
-      `}>
+      <CardContent
+        className={`
+          p-4 pt-0
+          sm:p-6 sm:pt-0
+        `}
+      >
         <SummaryDetails event={event} total={total} />
       </CardContent>
-      <CardFooter className="flex items-center justify-between">
-        <Button onClick={onPrev} variant="ghost">
-          <ChevronLeft className="mr-2 h-4 w-4" /> Atrás
+      <CardFooter
+        className={`
+          flex items-center justify-between border-t bg-muted/10 px-4 py-3
+          sm:px-6
+        `}
+      >
+        <Button className="w-32 justify-center" onClick={onPrev} variant="secondary">
+          <ChevronLeft className="mr-2 h-4 w-4" />
+          Atrás
         </Button>
-        <div className="flex flex-wrap items-center gap-2">
-          <Button onClick={onSubmit}>Enviar cotización</Button>
-        </div>
+        <Button className="min-w-32 justify-center" onClick={onSubmit}>
+          Enviar cotización
+        </Button>
       </CardFooter>
     </Card>
   );
