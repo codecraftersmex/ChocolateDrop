@@ -1,6 +1,10 @@
 {
   "name": "Chocolate Drop",
   "short_name": "Chocolate Drop",
+  "description": "Brigadeiros gourmet y postres para eventos en Monterrey.",
+  "lang": "es-MX",
+  "start_url": "https://chocolatedrop.store/",
+  "scope": "https://chocolatedrop.store/",
   "icons": [
     {
       "src": "/logo.png",

@@ -1,40 +1,24 @@
-"use client"
+import type { Metadata } from "next";
 
-import { AppSidebar } from "@/components/dashboard/app-sidebar"
-import { DashboardHeader } from "@/components/dashboard/dashboard-header"
-import { PasswordDialog } from "@/components/dashboard/password-dialog"
-import { SidebarProvider } from "@/components/ui/sidebar"
-import { AuthProvider, useAuth } from "@/lib/contexts/auth-context"
+import { DashboardLayoutClient } from "@/components/dashboard/dashboard-layout-client";
 
-function DashboardContent({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, login } = useAuth()
-
-  if (!isAuthenticated) {
-    return <PasswordDialog onAuthenticated={login} open={true} />
-  }
-
-  return (
-    <SidebarProvider className="overflow-x-clip">
-      <AppSidebar />
-      <main
-        className={`
-          mobile-vh-fix flex min-w-0 flex-1 flex-col overflow-x-clip
-          bg-background
-        `}
-      >
-        <DashboardHeader />
-        <div className="min-w-0 flex-1 overflow-x-clip">
-          {children}
-        </div>
-      </main>
-    </SidebarProvider>
-  )
-}
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/dashboard/",
+  },
+  robots: {
+    follow: false,
+    index: false,
+    googleBot: {
+      follow: false,
+      index: false,
+      noarchive: true,
+      nosnippet: true,
+    },
+  },
+  title: "Panel de administración",
+};
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <AuthProvider>
-      <DashboardContent>{children}</DashboardContent>
-    </AuthProvider>
-  )
+  return <DashboardLayoutClient>{children}</DashboardLayoutClient>;
 }
